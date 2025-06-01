@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>BazaarJo - تصفح الفئات مع فلتر الموقع</title>
+  <title>BazaarJo - أقسام متعددة</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,384 +18,346 @@
       font-size: 30px;
       font-weight: bold;
     }
-    .container {
-      max-width: 1200px;
-      margin: 20px auto;
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
       background: #fff;
-      border-radius: 8px;
-      padding: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      border-bottom: 1px solid #ddd;
     }
-    label {
-      font-weight: bold;
-      margin-right: 10px;
+    .tabs button {
+      flex: 1 1 120px;
+      padding: 15px;
       font-size: 16px;
-      display: inline-block;
-      min-width: 90px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: #444;
+    }
+    .tabs button:hover,
+    .tabs button.active {
+      background: #eee;
+    }
+    .filters {
+      display: none;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 15px 20px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .filters.active {
+      display: flex;
     }
     select, button {
       padding: 8px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      min-width: 180px;
-      margin-bottom: 15px;
-      cursor: pointer;
     }
     button {
       background: #d81b60;
       color: white;
       cursor: pointer;
-      min-width: 120px;
-    }
-    .filters {
-      display: none;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
-      align-items: center;
-    }
-    .filters.active {
-      display: flex;
     }
     #map {
-      height: 400px;
+      height: 500px;
+      margin: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
     }
   </style>
-
-  <!-- تضمين مكتبة خرائط Google -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&language=ar&region=JO"></script>
 </head>
 <body>
+  <header>BazaarJo - أقسام متعددة</header>
 
-  <header>BazaarJo - تصفح الفئات مع فلتر الموقع</header>
-
-  <div class="container">
-    <!-- اختيار الفئة -->
-    <label for="category-select">الفئة:</label>
-    <select id="category-select" onchange="showFilters()">
-      <option value="">اختر الفئة</option>
-      <option value="real-estate">عقارات</option>
-      <option value="vehicles">مركبات</option>
-      <option value="services">خدمات</option>
-      <option value="home-items">متعلقات منزلية</option>
-      <option value="personal-items">مستلزمات شخصية</option>
-      <option value="fashion">ملابس وأحذية</option>
-      <option value="hobbies">هوايات وترفيه</option>
-    </select>
-
-    <!-- فلتر الموقع -->
-    <label for="location-select">الموقع:</label>
-    <select id="location-select">
-      <option value="">اختر المنطقة</option>
-      <option value="amman">عمان</option>
-      <option value="zarqa">الزرقاء</option>
-      <option value="irbid">إربد</option>
-      <option value="aqaba">العقبة</option>
-      <option value="madaba">مادبا</option>
-      <!-- المزيد حسب الحاجة -->
-    </select>
-
-    <!-- خريطة Google -->
-    <div id="map"></div>
-
-    <!-- فلاتر لكل فئة -->
-
-    <!-- عقارات -->
-    <div id="real-estate" class="filters">
-      <label>نوع العقار:</label>
-      <select>
-        <option value="">اختر نوع العقار</option>
-        <option>شقة</option>
-        <option>فيلا</option>
-        <option>شاليه</option>
-        <option>أرض</option>
-        <option>محل تجاري</option>
-      </select>
-
-      <label>السعر:</label>
-      <select>
-        <option value="">اختر السعر</option>
-        <option>أقل من 50,000</option>
-        <option>50,000 - 100,000</option>
-        <option>100,000 - 200,000</option>
-        <option>أكثر من 200,000</option>
-      </select>
-
-      <label>المساحة (م²):</label>
-      <select>
-        <option value="">اختر المساحة</option>
-        <option>أقل من 50</option>
-        <option>50 - 100</option>
-        <option>100 - 200</option>
-        <option>أكثر من 200</option>
-      </select>
-
-      <label>عدد الغرف:</label>
-      <select>
-        <option value="">اختر عدد الغرف</option>
-        <option>1</option>
-        <option>2</option>
-        <option>3</option>
-        <option>4+</option>
-      </select>
-    </div>
-
-    <!-- مركبات -->
-    <div id="vehicles" class="filters">
-      <label for="vehicle-type">نوع المركبة:</label>
-      <select id="vehicle-type">
-        <option value="">اختر نوع المركبة</option>
-        <option value="سيارة">سيارة</option>
-        <option value="سيدان">سيدان</option>
-        <option value="هاتشباك">هاتشباك</option>
-        <option value="كروس أوفر">كروس أوفر</option>
-        <option value="SUV">دفع رباعي (SUV)</option>
-        <option value="بيك أب">بيك أب</option>
-        <option value="كوبيه">كوبيه</option>
-        <option value="كونفيرتيبل">كونفيرتيبل</option>
-        <option value="فان">فان</option>
-        <option value="دراجة نارية">دراجة نارية</option>
-        <option value="شاحنة">شاحنة</option>
-        <option value="باص">باص</option>
-      </select>
-
-      <label for="brand">الماركة:</label>
-      <select id="brand" onchange="populateModels()">
-        <option value="">اختر الماركة</option>
-        <option value="تويوتا">تويوتا</option>
-        <option value="هيونداي">هيونداي</option>
-        <option value="كيا">كيا</option>
-        <option value="نيسان">نيسان</option>
-        <option value="فورد">فورد</option>
-        <option value="مرسيدس">مرسيدس</option>
-        <option value="بي إم دبليو">بي إم دبليو</option>
-        <option value="أودي">أودي</option>
-        <option value="شيفروليه">شيفروليه</option>
-        <option value="لكزس">لكزس</option>
-        <option value="مازدا">مازدا</option>
-        <option value="ميتسوبيشي">ميتسوبيشي</option>
-        <option value="سوبارو">سوبارو</option>
-        <option value="فولكسفاجن">فولكسفاجن</option>
-        <option value="رينو">رينو</option>
-        <option value="جيب">جيب</option>
-        <option value="دايهاتسو">دايهاتسو</option>
-        <option value="سيتروين">سيتروين</option>
-        <option value="إيسوزو">إيسوزو</option>
-        <option value="سكودا">سكودا</option>
-        <option value="other">غير ذلك</option>
-      </select>
-
-      <label for="model">الموديل / الفئة:</label>
-      <select id="model" disabled>
-        <option value="">اختر الموديل</option>
-      </select>
-
-      <label>سنة الصنع:</label>
-      <select>
-        <option value="">اختر السنة</option>
-        <option>2025</option>
-        <option>2024</option>
-        <option>2023</option>
-        <option>2022</option>
-        <option>2021</option>
-        <option>2020</option>
-        <option>أقدم</option>
-      </select>
-
-      <label>السعر:</label>
-      <select>
-        <option value="">اختر السعر</option>
-        <option>أقل من 10,000</option>
-        <option>10,000 - 30,000</option>
-        <option>30,000 - 50,000</option>
-        <option>أكثر من 50,000</option>
-      </select>
-    </div>
-
-    <!-- خدمات -->
-    <div id="services" class="filters">
-      <label for="main-service">نوع الخدمة:</label>
-      <select id="main-service" onchange="showSubServices()">
-        <option value="">اختر نوع الخدمة</option>
-        <option value="home">خدمات منزلية</option>
-        <option value="personal">خدمات شخصية</option>
-        <option value="tech">خدمات تقنية</option>
-        <option value="consulting">خدمات استشارية</option>
-        <option value="delivery">خدمات توصيل ونقل</option>
-        <option value="entertainment">خدمات ترفيه وتنظيم مناسبات</option>
-        <option value="education">خدمات تعليمية وتدريبية</option>
-      </select>
-
-      <label for="sub-service" id="sub-service-label" style="display:none;">الخدمة الفرعية:</label>
-      <select id="sub-service" style="display:none;">
-        <option value="">اختر الخدمة الفرعية</option>
-      </select>
-    </div>
-
-    <!-- متعلقات منزلية -->
-    <div id="home-items" class="filters">
-      <label>نوع المتعلق:</label>
-      <select>
-        <option value="">اختر نوع المتعلق</option>
-        <option value="أثاث">أثاث</option>
-        <option value="ديكور">ديكور</option>
-        <option value="أدوات مطبخ">أدوات مطبخ</option>
-        <option value="مستلزمات تنظيف">مستلزمات تنظيف</option>
-        <option value="أدوات حدائق">أدوات حدائق</option>
-        <option value="مستلزمات أطفال">مستلزمات أطفال</option>
-        <option value="مستلزمات تخزين">مستلزمات تخزين</option>
-        <option value="أدوات صيانة">أدوات صيانة</option>
-        <option value="غير ذلك">غير ذلك</option>
-      </select>
-    </div>
-
-    <!-- مستلزمات شخصية -->
-    <div id="personal-items" class="filters">
-      <label>نوع المستلزمات الشخصية:</label>
-      <select>
-        <option value="">اختر النوع</option>
-        <option value="مستحضرات تجميل">مستحضرات تجميل</option>
-        <option value="عطور">عطور</option>
-        <option value="منتجات العناية بالبشرة">منتجات العناية بالبشرة</option>
-        <option value="أدوات حلاقة">أدوات حلاقة</option>
-        <option value="إكسسوارات">إكسسوارات</option>
-        <option value="ساعات">ساعات</option>
-        <option value="غير ذلك">غير ذلك</option>
-      </select>
-    </div>
-
-    <!-- ملابس وأحذية -->
-    <div id="fashion" class="filters">
-      <label>نوع الملابس:</label>
-      <select>
-        <option value="">اختر النوع</option>
-        <option value="رجالي">رجالي</option>
-        <option value="نسائي">نسائي</option>
-        <option value="أطفال">أطفال</option>
-        <option value="أحذية">أحذية</option>
-        <option value="إكسسوارات">إكسسوارات</option>
-      </select>
-    </div>
-
-    <!-- هوايات وترفيه -->
-    <div id="hobbies" class="filters">
-      <label>نوع الهواية:</label>
-      <select>
-        <option value="">اختر النوع</option>
-        <option value="كتب">كتب</option>
-        <option value="معدات رياضية">معدات رياضية</option>
-        <option value="ألعاب">ألعاب</option>
-        <option value="آلات موسيقية">آلات موسيقية</option>
-        <option value="أدوات فنية">أدوات فنية</option>
-        <option value="أخرى">أخرى</option>
-      </select>
-    </div>
-
+  <!-- تبويبات الأقسام -->
+  <div class="tabs">
+    <button onclick="showSection('real-estate')">عقارات</button>
+    <button onclick="showSection('vehicles')">مركبات</button>
+    <button onclick="showSection('services')">خدمات</button>
+    <button onclick="showSection('home-items')">متعلقات منزلية</button>
+    <button onclick="showSection('personal-items')">مستلزمات شخصية</button>
+    <button onclick="showSection('fashion')">ملابس وأحذية</button>
+    <button onclick="showSection('hobbies')">هوايات وترفيه</button>
   </div>
 
-<script>
-  // إظهار الفلاتر بناءً على اختيار الفئة
-  function showFilters() {
-    const category = document.getElementById('category-select').value;
-    // إخفاء كل الفلاتر أولاً
-    document.querySelectorAll('.filters').forEach(div => {
-      div.classList.remove('active');
+  <!-- فلاتر الأقسام -->
+  <div class="filters" id="real-estate">
+    <select><option>نوع العقار</option></select>
+    <select><option>السعر</option></select>
+    <select><option>المساحة</option></select>
+    <select><option>عدد الغرف</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="vehicles">
+    <select id="vehicle-type">
+      <option value="">نوع المركبة</option>
+      <option value="سيارة">سيارة</option>
+      <option value="سيدان">سيدان</option>
+      <option value="هاتشباك">هاتشباك</option>
+      <option value="كروس أوفر">كروس أوفر</option>
+      <option value="SUV">دفع رباعي (SUV)</option>
+      <option value="بيك أب">بيك أب</option>
+      <option value="كوبيه">كوبيه</option>
+      <option value="كونفيرتيبل">كونفيرتيبل</option>
+      <option value="فان">فان</option>
+      <option value="دراجة نارية">دراجة نارية</option>
+      <option value="شاحنة">شاحنة</option>
+      <option value="باص">باص</option>
+    </select>
+
+    <select id="brand">
+      <option value="">الماركة</option>
+      <option value="تويوتا">تويوتا</option>
+      <option value="هيونداي">هيونداي</option>
+      <option value="كيا">كيا</option>
+      <option value="نيسان">نيسان</option>
+      <option value="فورد">فورد</option>
+      <option value="مرسيدس">مرسيدس</option>
+      <option value="بي إم دبليو">بي إم دبليو</option>
+      <option value="أودي">أودي</option>
+      <option value="شيفروليه">شيفروليه</option>
+      <option value="لكزس">لكزس</option>
+      <option value="مازدا">مازدا</option>
+      <option value="ميتسوبيشي">ميتسوبيشي</option>
+      <option value="سوبارو">سوبارو</option>
+      <option value="فولكسفاجن">فولكسفاجن</option>
+      <option value="رينو">رينو</option>
+      <option value="جيب">جيب</option>
+      <option value="دايهاتسو">دايهاتسو</option>
+      <option value="سيتروين">سيتروين</option>
+      <option value="إيسوزو">إيسوزو</option>
+      <option value="سكودا">سكودا</option>
+      <option value="other">غير ذلك</option>
+    </select>
+
+    <select id="model" disabled>
+      <option value="">الموديل / الفئة</option>
+    </select>
+
+    <select><option>سنة الصنع</option></select>
+    <select><option>السعر</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="services">
+    <select id="main-service" onchange="showSubServices()">
+      <option value="">اختر نوع الخدمة</option>
+      <option value="home">خدمات منزلية</option>
+      <option value="personal">خدمات شخصية</option>
+      <option value="tech">خدمات تقنية</option>
+      <option value="consulting">خدمات استشارية</option>
+      <option value="delivery">خدمات توصيل ونقل</option>
+      <option value="entertainment">خدمات ترفيه وتنظيم مناسبات</option>
+      <option value="education">خدمات تعليمية وتدريبية</option>
+    </select>
+
+    <select id="sub-service" style="display:none;">
+      <option value="">اختر الخدمة الفرعية</option>
+    </select>
+
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="home-items">
+    <select>
+      <option value="">اختر نوع المتعلق</option>
+      <option value="أثاث">أثاث</option>
+      <option value="ديكور">ديكور</option>
+      <option value="أدوات مطبخ">أدوات مطبخ</option>
+      <option value="مستلزمات تنظيف">مستلزمات تنظيف</option>
+      <option value="أدوات حدائق">أدوات حدائق</option>
+      <option value="مستلزمات أطفال">مستلزمات أطفال</option>
+      <option value="مستلزمات تخزين">مستلزمات تخزين</option>
+      <option value="أدوات صيانة">أدوات صيانة</option>
+      <option value="غير ذلك">غير ذلك</option>
+    </select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="personal-items">
+    <select id="personal-items-select">
+      <option value="">نوع المستلزمات الشخصية</option>
+      <option value="مستحضرات تجميل">مستحضرات تجميل</option>
+      <option value="عطور">عطور</option>
+      <option value="منتجات العناية بالبشرة">منتجات العناية بالبشرة</option>
+      <option value="أدوات الحلاقة">أدوات الحلاقة</option>
+      <option value="نظارات شمسية ونظارات طبية">نظارات شمسية ونظارات طبية</option>
+      <option value="ساعات وأكسسوارات">ساعات وأكسسوارات</option>
+      <option value="حقائب ومحافظ">حقائب ومحافظ</option>
+      <option value="مجوهرات">مجوهرات</option>
+      <option value="مستلزمات الشعر">مستلزمات الشعر</option>
+      <option value="أدوات العناية بالأظافر">أدوات العناية بالأظافر</option>
+      <option value="ملابس داخلية">ملابس داخلية</option>
+      <option value="غير ذلك">غير ذلك</option>
+    </select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+<div class="filters" id="fashion">
+  <select id="fashion-category">
+    <option value="">اختر الفئة</option>
+    <option value="رجالي">رجالي</option>
+    <option value="نسائي">نسائي</option>
+    <option value="أطفال">أطفال</option>
+    <option value="أحذية">أحذية</option>
+    <option value="حقائب وأكسسوارات">حقائب وأكسسوارات</option>
+    <option value="ملابس رياضية">ملابس رياضية</option>
+    <option value="ملابس رسمية">ملابس رسمية</option>
+    <option value="ملابس داخلية">ملابس داخلية</option>
+    <option value="أزياء تقليدية">أزياء تقليدية</option>
+    <option value="غير ذلك">غير ذلك</option>
+  </select>
+
+  <select id="fashion-condition">
+    <option value="">حالة المنتج</option>
+    <option value="جديد">جديد</option>
+    <option value="مستعمل بحالة ممتازة">مستعمل بحالة ممتازة</option>
+    <option value="مستعمل بحالة جيدة">مستعمل بحالة جيدة</option>
+    <option value="بحاجة إلى بعض التصليح">بحاجة إلى بعض التصليح</option>
+  </select>
+
+  <button>تطبيق الفلاتر</button>
+</div>
+  <div class="filters" id="hobbies">
+    <select>
+      <option value="">اختر الفئة</option>
+      <option value="كتب ومجلات">كتب ومجلات</option>
+      <option value="أدوات موسيقية">أدوات موسيقية</option>
+      <option value="ألعاب فيديو">ألعاب فيديو وأجهزة ألعاب</option>
+      <option value="معدات رياضية">معدات رياضية</option>
+      <option value="معدات تخييم">معدات تخييم ورحلات</option>
+      <option value="أدوات فنون">أدوات رسم وفنون</option>
+      <option value="أدوات صيد">أدوات صيد</option>
+      <option value="ألعاب أطفال">ألعاب وهوايات أطفال</option>
+      <option value="أدوات DIY">أدوات صنع يدوي / DIY</option>
+      <option value="غير ذلك">غير ذلك</option>
+    </select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <!-- خريطة -->
+  <div id="map"></div>
+
+  <!-- سكريبتات -->
+  <script>
+    const subServices = {
+      "home": ["تنظيف وصيانة المنازل", "إصلاحات كهربائية وسباكة", "دهان وترميم", "خدمات التكييف والتبريد"],
+      "personal": ["حلاقة وتجميل", "مدرب شخصي / لياقة بدنية", "جلسات تدليك وعلاج طبيعي", "تعليم خصوصي"],
+      "tech": ["تصميم مواقع وتطبيقات", "صيانة أجهزة الكمبيوتر والهواتف", "دعم فني وخدمات IT", "تسويق إلكتروني"],
+      "consulting": ["استشارات قانونية", "استشارات مالية وضريبية", "استشارات هندسية وعقارية"],
+      "delivery": ["خدمات توصيل الطرود والطلبات", "نقل أثاث ومعدات", "استئجار سيارات وشاحنات"],
+      "entertainment": ["تنظيم حفلات وأعياد ميلاد", "تصوير فوتوغرافي وفيديو", "خدمات موسيقية وفنية"],
+      "education": ["كورسات وورش عمل", "تعليم لغات", "دورات تدريب مهني"]
+    };
+
+    function showSubServices() {
+      const mainSelect = document.getElementById('main-service');
+      const subSelect = document.getElementById('sub-service');
+      const selected = mainSelect.value;
+
+      if (!selected) {
+        subSelect.style.display = 'none';
+        subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+        return;
+      }
+
+      subSelect.style.display = 'inline-block';
+      subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+
+      subServices[selected].forEach(service => {
+        const option = document.createElement('option');
+        option.value = service;
+        option.textContent = service;
+        subSelect.appendChild(option);
+      });
+    }
+
+    const vehicleModels = {
+      "تويوتا": ["كورولا", "كامري", "لاندكروزر", "برادو", "راف فور", "هايكس", "فورتشنر"],
+      "هيونداي": ["النترا", "سوناتا", "توسان", "سانتا في", "كريتا", "أزيرا"],
+      "كيا": ["سيراتو", "سبورتاج", "ماديرا", "أوبتيما", "ريو", "كادينزا"],
+      "نيسان": ["تيما", "باترول", "ألتيما", "سنترا", "قشقاي", "أرمادا"],
+      "فورد": ["F-150", "موستنج", "إكسبلورر", "إيدج", "رينجر"],
+      "مرسيدس": ["C-Class", "E-Class", "S-Class", "GLE", "GLC", "A-Class", "CLA", "G-Class"],
+      "بي إم دبليو": ["سلسلة 3", "سلسلة 5", "سلسلة 7", "X3", "X5", "X1", "Z4"],
+      "أودي": ["A3", "A4", "A6", "Q3", "Q5", "Q7", "TT"],
+      "شيفروليه": ["ماليبو", "كامارو", "سوبربان", "تاهو", "كولورادو"],
+      "لكزس": ["RX", "ES", "NX", "LX", "IS"],
+      "مازدا": ["3", "6", "CX-3", "CX-5", "CX-9"],
+      "ميتسوبيشي": ["لانسر", "باجيرو", "أوتلندر", "أكترس", "ميجنس"],
+      "سوبارو": ["فورستر", "ايمبريزا", "ليفورك", "أوتباك"],
+      "فولكسفاجن": ["جولف", "باسات", "Tiguan", "Polo"],
+      "رينو": ["كليو", "ميغان", "داستر", "سانديرو"],
+      "جيب": ["رانجلر", "غراند شيروكي", "شيروكي", "كمباس"],
+      "دايهاتسو": ["تيريوس", "تيريوس أكس", "كوستر", "ميكرا"],
+      "سيتروين": ["C3", "C4", "C5", "Berlingo"],
+      "إيسوزو": ["دي-ماكس", "فيريتسو", "فورورد"],
+      "سكودا": ["أوكتافيا", "فابيا", "سوبيرب", "كودياك"],
+      "other": ["نوع آخر"]
+    };
+
+    document.getElementById('brand').addEventListener('change', function() {
+      const brand = this.value;
+      const modelSelect = document.getElementById('model');
+      modelSelect.innerHTML = '<option value="">الموديل / الفئة</option>';
+
+      if (brand && vehicleModels[brand]) {
+        vehicleModels[brand].forEach(model => {
+          const option = document.createElement('option');
+          option.value = model;
+          option.textContent = model;
+          modelSelect.appendChild(option);
+        });
+        modelSelect.disabled = false;
+      } else {
+        modelSelect.disabled = true;
+      }
     });
 
-    if (category) {
-      const el = document.getElementById(category);
-      if (el) {
-        el.classList.add('active');
-      }
-    }
-  }
-
-  // روابط الماركة والموديل للسيارات
-  const modelsByBrand = {
-    "تويوتا": ["كورولا", "كامري", "راف فور", "هايلكس", "برادو"],
-    "هيونداي": ["ألنترا", "سوناتا", "توسان", "كريتا", "جراند سنتافي"],
-    "كيا": ["ريو", "سبورتاج", "سيراتو", "أوبتيما"],
-    "نيسان": ["ألتيما", "صني", "باترول", "تيانا"],
-    "فورد": ["فوكوس", "إكسبلورر", "رنجير"],
-    "مرسيدس": ["C-Class", "E-Class", "GLA", "GLE"],
-    "بي إم دبليو": ["سلسلة 3", "سلسلة 5", "X3", "X5"],
-    "أودي": ["A3", "A4", "Q5"],
-    "شيفروليه": ["كروز", "تاهو", "سلفرادو"],
-    "لكزس": ["ES", "RX", "NX"],
-    "مازدا": ["3", "6", "CX-5"],
-    "ميتسوبيشي": ["لانسر", "باجيرو"],
-    "سوبارو": ["فورستر", "أوتباك"],
-    "فولكسفاجن": ["جولف", "باسات"],
-    "رينو": ["كليو", "ميجان"],
-    "جيب": ["رانجلر", "غراند شيروكي"],
-    "دايهاتسو": ["تيريوس", "تيريوس"],
-    "سيتروين": ["C3", "C4"],
-    "إيسوزو": ["دي ماكس"],
-    "سكودا": ["أوكتافيا", "رامبلر"],
-    "other": ["موديل 1", "موديل 2"]
-  };
-
-  function populateModels() {
-    const brandSelect = document.getElementById('brand');
-    const modelSelect = document.getElementById('model');
-    const selectedBrand = brandSelect.value;
-
-    modelSelect.innerHTML = '<option value="">اختر الموديل</option>';
-    modelSelect.disabled = true;
-
-    if (selectedBrand && modelsByBrand[selectedBrand]) {
-      modelsByBrand[selectedBrand].forEach(model => {
-        const opt = document.createElement('option');
-        opt.value = model;
-        opt.textContent = model;
-        modelSelect.appendChild(opt);
+    function initMap() {
+      const center = { lat: 31.963158, lng: 35.930359 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 8,
+        center: center,
       });
-      modelSelect.disabled = false;
+      window.map = map;
+      window.markers = [];
     }
-  }
 
-  // عرض الخدمات الفرعية حسب نوع الخدمة
-  const subServicesByMain = {
-    "home": ["تنظيف", "صيانة", "تصليحات", "توصيل فواتير"],
-    "personal": ["تدريب رياضي", "تجميل", "تدليك", "خدمات رعاية"],
-    "tech": ["برمجة", "تصميم", "دعم فني", "صيانة أجهزة"],
-    "consulting": ["إدارية", "مالية", "قانونية", "تسويق"],
-    "delivery": ["توصيل طعام", "نقل أثاث", "شحن طرود"],
-    "entertainment": ["تنظيم حفلات", "تصوير", "دي جي", "تأجير معدات"],
-    "education": ["دروس خصوصية", "كورسات", "تدريب مهني"]
-  };
+    function showSection(sectionId) {
+      document.querySelectorAll('.filters').forEach(el => el.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
 
-  function showSubServices() {
-    const mainServiceSelect = document.getElementById('main-service');
-    const subServiceSelect = document.getElementById('sub-service');
-    const subLabel = document.getElementById('sub-service-label');
-
-    const selectedMain = mainServiceSelect.value;
-
-    if (selectedMain && subServicesByMain[selectedMain]) {
-      subServiceSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
-      subServicesByMain[selectedMain].forEach(sub => {
-        const opt = document.createElement('option');
-        opt.value = sub;
-        opt.textContent = sub;
-        subServiceSelect.appendChild(opt);
-      });
-      subServiceSelect.style.display = 'inline-block';
-      subLabel.style.display = 'inline-block';
-    } else {
-      subServiceSelect.style.display = 'none';
-      subLabel.style.display = 'none';
-      subServiceSelect.innerHTML = '';
+      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+      const tabButton = [...document.querySelectorAll('.tabs button')].find(btn =>
+        btn.textContent.includes(getSectionName(sectionId))
+      );
+      if (tabButton) tabButton.classList.add('active');
     }
-  }
 
-  // تهيئة خريطة Google
-  let map;
-  let marker;
+    function getSectionName(id) {
+      const map = {
+        'real-estate': 'عقارات',
+        'vehicles': 'مركبات',
+        'services': 'خدمات',
+        'home-items': 'متعلقات منزلية',
+        'personal-items': 'مستلزمات شخصية',
+        'fashion': 'ملابس',
+        'hobbies': 'هوايات'
+      };
+      return map[id] || '';
+    }
 
-  function initMap() {
-    const default
+    document.addEventListener('DOMContentLoaded', () => {
+      showSection('real-estate');
+    });
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
+</body>
+</html>
