@@ -144,132 +144,113 @@
   </div>
 
   <div class="filters" id="services">
-  <select id="main-service" onchange="showSubServices()">
-    <option value="">اختر نوع الخدمة</option>
-    <option value="home">خدمات منزلية</option>
-    <option value="personal">خدمات شخصية</option>
-    <option value="tech">خدمات تقنية</option>
-    <option value="consulting">خدمات استشارية</option>
-    <option value="delivery">خدمات توصيل ونقل</option>
-    <option value="entertainment">خدمات ترفيه وتنظيم مناسبات</option>
-    <option value="education">خدمات تعليمية وتدريبية</option>
-  </select>
+    <select id="main-service" onchange="showSubServices()">
+      <option value="">اختر نوع الخدمة</option>
+      <option value="home">خدمات منزلية</option>
+      <option value="personal">خدمات شخصية</option>
+      <option value="tech">خدمات تقنية</option>
+      <option value="consulting">خدمات استشارية</option>
+      <option value="delivery">خدمات توصيل ونقل</option>
+      <option value="entertainment">خدمات ترفيه وتنظيم مناسبات</option>
+      <option value="education">خدمات تعليمية وتدريبية</option>
+    </select>
 
-  <select id="sub-service" style="display:none;">
-    <option value="">اختر الخدمة الفرعية</option>
-  </select>
+    <select id="sub-service" style="display:none;">
+      <option value="">اختر الخدمة الفرعية</option>
+    </select>
 
-  <button>تطبيق الفلاتر</button>
-</div>
-
-<script>
-  const subServices = {
-    "home": ["تنظيف وصيانة المنازل", "إصلاحات كهربائية وسباكة", "دهان وترميم", "خدمات التكييف والتبريد"],
-    "personal": ["حلاقة وتجميل", "مدرب شخصي / لياقة بدنية", "جلسات تدليك وعلاج طبيعي", "تعليم خصوصي"],
-    "tech": ["تصميم مواقع وتطبيقات", "صيانة أجهزة الكمبيوتر والهواتف", "دعم فني وخدمات IT", "تسويق إلكتروني"],
-    "consulting": ["استشارات قانونية", "استشارات مالية وضريبية", "استشارات هندسية وعقارية"],
-    "delivery": ["خدمات توصيل الطرود والطلبات", "نقل أثاث ومعدات", "استئجار سيارات وشاحنات"],
-    "entertainment": ["تنظيم حفلات وأعياد ميلاد", "تصوير فوتوغرافي وفيديو", "خدمات موسيقية وفنية"],
-    "education": ["كورسات وورش عمل", "تعليم لغات", "دورات تدريب مهني"]
-  };
-
-  function showSubServices() {
-    const mainSelect = document.getElementById('main-service');
-    const subSelect = document.getElementById('sub-service');
-    const selected = mainSelect.value;
-
-    if (!selected) {
-      subSelect.style.display = 'none';
-      subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
-      return;
-    }
-
-    subSelect.style.display = 'inline-block';
-    subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
-
-    subServices[selected].forEach(service => {
-      const option = document.createElement('option');
-      option.value = service;
-      option.textContent = service;
-      subSelect.appendChild(option);
-    });
-  }
-</script>
+    <button>تطبيق الفلاتر</button>
+  </div>
 
   <div class="filters" id="home-items">
-  <select>
-    <option value="">اختر نوع المتعلق</option>
-    <option value="أثاث">أثاث</option>
-    <option value="ديكور">ديكور</option>
-    <option value="أدوات مطبخ">أدوات مطبخ</option>
-    <option value="مستلزمات تنظيف">مستلزمات تنظيف</option>
-    <option value="أدوات حدائق">أدوات حدائق</option>
-    <option value="مستلزمات أطفال">مستلزمات أطفال</option>
-    <option value="مستلزمات تخزين">مستلزمات تخزين</option>
-    <option value="أدوات صيانة">أدوات صيانة</option>
-    <option value="غير ذلك">غير ذلك</option>
-  </select>
-  <button>تطبيق الفلاتر</button>
-</div>
+    <select>
+      <option value="">اختر نوع المتعلق</option>
+      <option value="أثاث">أثاث</option>
+      <option value="ديكور">ديكور</option>
+      <option value="أدوات مطبخ">أدوات مطبخ</option>
+      <option value="مستلزمات تنظيف">مستلزمات تنظيف</option>
+      <option value="أدوات حدائق">أدوات حدائق</option>
+      <option value="مستلزمات أطفال">مستلزمات أطفال</option>
+      <option value="مستلزمات تخزين">مستلزمات تخزين</option>
+      <option value="أدوات صيانة">أدوات صيانة</option>
+      <option value="غير ذلك">غير ذلك</option>
+    </select>
+    <button>تطبيق الفلاتر</button>
+  </div>
 
-  <select id="personal-items-select">
-  <option value="">نوع المستلزمات الشخصية</option>
-  <option value="مستحضرات تجميل">مستحضرات تجميل</option>
-  <option value="عطور">عطور</option>
-  <option value="منتجات العناية بالبشرة">منتجات العناية بالبشرة</option>
-  <option value="أدوات الحلاقة">أدوات الحلاقة</option>
-  <option value="نظارات شمسية ونظارات طبية">نظارات شمسية ونظارات طبية</option>
-  <option value="ساعات وأكسسوارات">ساعات وأكسسوارات</option>
-  <option value="حقائب ومحافظ">حقائب ومحافظ</option>
-  <option value="مجوهرات">مجوهرات</option>
-  <option value="مستلزمات الشعر">مستلزمات الشعر</option>
-  <option value="أدوات العناية بالأظافر">أدوات العناية بالأظافر</option>
-  <option value="ملابس داخلية">ملابس داخلية</option>
-  <option value="غير ذلك">غير ذلك</option>
-</select>
-<button>تطبيق الفلاتر</button>
-
-<div class="filters" id="personal-items">
-  <select id="personal-items-select">
-    <option value="">نوع المستلزمات الشخصية</option>
-    <option value="مستحضرات تجميل">مستحضرات تجميل</option>
-    <option value="عطور">عطور</option>
-    <option value="منتجات العناية بالبشرة">منتجات العناية بالبشرة</option>
-    <option value="أدوات الحلاقة">أدوات الحلاقة</option>
-    <option value="نظارات شمسية ونظارات طبية">نظارات شمسية ونظارات طبية</option>
-    <option value="ساعات وأكسسوارات">ساعات وأكسسوارات</option>
-    <option value="حقائب ومحافظ">حقائب ومحافظ</option>
-    <option value="مجوهرات">مجوهرات</option>
-    <option value="مستلزمات الشعر">مستلزمات الشعر</option>
-    <option value="أدوات العناية بالأظافر">أدوات العناية بالأظافر</option>
-    <option value="ملابس داخلية">ملابس داخلية</option>
-    <option value="غير ذلك">غير ذلك</option>
-  </select>
-  <button>تطبيق الفلاتر</button>
-</div>
+  <div class="filters" id="personal-items">
+    <select id="personal-items-select">
+      <option value="">نوع المستلزمات الشخصية</option>
+      <option value="مستحضرات تجميل">مستحضرات تجميل</option>
+      <option value="عطور">عطور</option>
+      <option value="منتجات العناية بالبشرة">منتجات العناية بالبشرة</option>
+      <option value="أدوات الحلاقة">أدوات الحلاقة</option>
+      <option value="نظارات شمسية ونظارات طبية">نظارات شمسية ونظارات طبية</option>
+      <option value="ساعات وأكسسوارات">ساعات وأكسسوارات</option>
+      <option value="حقائب ومحافظ">حقائب ومحافظ</option>
+      <option value="مجوهرات">مجوهرات</option>
+      <option value="مستلزمات الشعر">مستلزمات الشعر</option>
+      <option value="أدوات العناية بالأظافر">أدوات العناية بالأظافر</option>
+      <option value="ملابس داخلية">ملابس داخلية</option>
+      <option value="غير ذلك">غير ذلك</option>
+    </select>
+    <button>تطبيق الفلاتر</button>
+  </div>
 
   <div class="filters" id="hobbies">
-  <select>
-    <option value="">اختر الفئة</option>
-    <option value="كتب ومجلات">كتب ومجلات</option>
-    <option value="أدوات موسيقية">أدوات موسيقية</option>
-    <option value="ألعاب فيديو">ألعاب فيديو وأجهزة ألعاب</option>
-    <option value="معدات رياضية">معدات رياضية</option>
-    <option value="معدات تخييم">معدات تخييم ورحلات</option>
-    <option value="أدوات فنون">أدوات رسم وفنون</option>
-    <option value="أدوات صيد">أدوات صيد</option>
-    <option value="ألعاب أطفال">ألعاب وهوايات أطفال</option>
-    <option value="أدوات DIY">أدوات صنع يدوي / DIY</option>
-    <option value="غير ذلك">غير ذلك</option>
-  </select>
-  <button>تطبيق الفلاتر</button>
-</div>
+    <select>
+      <option value="">اختر الفئة</option>
+      <option value="كتب ومجلات">كتب ومجلات</option>
+      <option value="أدوات موسيقية">أدوات موسيقية</option>
+      <option value="ألعاب فيديو">ألعاب فيديو وأجهزة ألعاب</option>
+      <option value="معدات رياضية">معدات رياضية</option>
+      <option value="معدات تخييم">معدات تخييم ورحلات</option>
+      <option value="أدوات فنون">أدوات رسم وفنون</option>
+      <option value="أدوات صيد">أدوات صيد</option>
+      <option value="ألعاب أطفال">ألعاب وهوايات أطفال</option>
+      <option value="أدوات DIY">أدوات صنع يدوي / DIY</option>
+      <option value="غير ذلك">غير ذلك</option>
+    </select>
+    <button>تطبيق الفلاتر</button>
+  </div>
 
   <!-- خريطة -->
   <div id="map"></div>
 
-  <!-- جافاسكربت -->
+  <!-- سكريبتات -->
   <script>
+    const subServices = {
+      "home": ["تنظيف وصيانة المنازل", "إصلاحات كهربائية وسباكة", "دهان وترميم", "خدمات التكييف والتبريد"],
+      "personal": ["حلاقة وتجميل", "مدرب شخصي / لياقة بدنية", "جلسات تدليك وعلاج طبيعي", "تعليم خصوصي"],
+      "tech": ["تصميم مواقع وتطبيقات", "صيانة أجهزة الكمبيوتر والهواتف", "دعم فني وخدمات IT", "تسويق إلكتروني"],
+      "consulting": ["استشارات قانونية", "استشارات مالية وضريبية", "استشارات هندسية وعقارية"],
+      "delivery": ["خدمات توصيل الطرود والطلبات", "نقل أثاث ومعدات", "استئجار سيارات وشاحنات"],
+      "entertainment": ["تنظيم حفلات وأعياد ميلاد", "تصوير فوتوغرافي وفيديو", "خدمات موسيقية وفنية"],
+      "education": ["كورسات وورش عمل", "تعليم لغات", "دورات تدريب مهني"]
+    };
+
+    function showSubServices() {
+      const mainSelect = document.getElementById('main-service');
+      const subSelect = document.getElementById('sub-service');
+      const selected = mainSelect.value;
+
+      if (!selected) {
+        subSelect.style.display = 'none';
+        subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+        return;
+      }
+
+      subSelect.style.display = 'inline-block';
+      subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+
+      subServices[selected].forEach(service => {
+        const option = document.createElement('option');
+        option.value = service;
+        option.textContent = service;
+        subSelect.appendChild(option);
+      });
+    }
+
     const vehicleModels = {
       "تويوتا": ["كورولا", "كامري", "لاندكروزر", "برادو", "راف فور", "هايكس", "فورتشنر"],
       "هيونداي": ["النترا", "سوناتا", "توسان", "سانتا في", "كريتا", "أزيرا"],
