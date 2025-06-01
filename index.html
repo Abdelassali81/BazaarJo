@@ -276,54 +276,53 @@
     // Set initial language and populate regions on page load
     updateLanguage('ar');
 
-  </script>
-const carData = {
-  ar: {
-    تويوتا: ["كورولا", "كامري", "يارس"],
-    هيونداي: ["النترا", "سوناتا", "توسان"],
-    فورد: ["فوكس", "فيوجن", "إكسبلورر"]
-  },
-  en: {
-    Toyota: ["Corolla", "Camry", "Yaris"],
-    Hyundai: ["Elantra", "Sonata", "Tucson"],
-    Ford: ["Focus", "Fusion", "Explorer"]
-  }
-};
+  </script
+  const carData = {
+    ar: {
+      تويوتا: ["كورولا", "كامري", "يارس"],
+      هيونداي: ["النترا", "سوناتا", "توسان"],
+      فورد: ["فوكس", "فيوجن", "إكسبلورر"]
+    },
+    en: {
+      Toyota: ["Corolla", "Camry", "Yaris"],
+      Hyundai: ["Elantra", "Sonata", "Tucson"],
+      Ford: ["Focus", "Fusion", "Explorer"]
+    }
+  };
 
-function populateBrands(lang) {
-  const brandSelect = document.getElementById("car-brand");
-  const modelSelect = document.getElementById("car-model");
-  const brands = Object.keys(carData[lang]);
-  brandSelect.innerHTML = `<option value="">${lang === 'ar' ? "اختر نوع السيارة" : "Select Car Brand"}</option>`;
-  modelSelect.innerHTML = `<option value="">${lang === 'ar' ? "اختر الموديل" : "Select Model"}</option>`;
-  brands.forEach(brand => {
-    brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
-  });
-}
-
-document.getElementById("car-brand").addEventListener("change", function () {
-  const lang = document.getElementById("language").value;
-  const brand = this.value;
-  const modelSelect = document.getElementById("car-model");
-  modelSelect.innerHTML = `<option value="">${lang === 'ar' ? "اختر الموديل" : "Select Model"}</option>`;
-  if (carData[lang][brand]) {
-    carData[lang][brand].forEach(model => {
-      modelSelect.innerHTML += `<option value="${model}">${model}</option>`;
+  function populateBrands(lang) {
+    const brandSelect = document.getElementById("car-brand");
+    const modelSelect = document.getElementById("car-model");
+    const brands = Object.keys(carData[lang]);
+    brandSelect.innerHTML = `<option value="">${lang === 'ar' ? "اختر نوع السيارة" : "Select Car Brand"}</option>`;
+    modelSelect.innerHTML = `<option value="">${lang === 'ar' ? "اختر الموديل" : "Select Model"}</option>`;
+    brands.forEach(brand => {
+      brandSelect.innerHTML += `<option value="${brand}">${brand}</option>`;
     });
   }
-});
 
-// عند تغيير اللغة
-document.getElementById('language').addEventListener('change', (e) => {
-  const lang = e.target.value;
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-  updateLanguage(lang);
-  populateBrands(lang); // ← مضافة هنا
-});
+  document.getElementById("car-brand").addEventListener("change", function () {
+    const lang = document.getElementById("language").value;
+    const brand = this.value;
+    const modelSelect = document.getElementById("car-model");
+    modelSelect.innerHTML = `<option value="">${lang === 'ar' ? "اختر الموديل" : "Select Model"}</option>`;
+    if (carData[lang][brand]) {
+      carData[lang][brand].forEach(model => {
+        modelSelect.innerHTML += `<option value="${model}">${model}</option>`;
+      });
+    }
+  });
 
-// تأكد من تحميلها في البداية
-populateBrands('ar');
+  document.getElementById('language').addEventListener('change', (e) => {
+    const lang = e.target.value;
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    updateLanguage(lang);
+    populateBrands(lang); // ← أضفناها هنا لتحديث القائمة عند تغيير اللغة
+  });
+
+  populateBrands('ar');>
+
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
