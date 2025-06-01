@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>BazaarJo - المنصة المتكاملة</title>
   <style>
     body {
@@ -32,6 +32,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      flex-grow: 1;
     }
     .tab-btn {
       padding: 8px 14px;
@@ -39,6 +40,7 @@
       background: #eee;
       cursor: pointer;
       border-radius: 5px;
+      transition: background-color 0.3s;
     }
     .tab-btn.active {
       background: #d81b60;
@@ -182,7 +184,11 @@
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         sections.forEach(s => s.classList.remove('active'));
-        document.getElementById(tab.dataset.target).classList.add('active');
+        const targetId = tab.dataset.target;
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+          targetSection.classList.add('active');
+        }
       });
     });
 
@@ -217,8 +223,6 @@
       alert("تم اختيار الخدمة: " + selected);
     });
 
-    updateLanguage('ar'); // تأكيد تشغيل اللغة عند البدء
-
     const translations = {
       ar: {
         header: "BazaarJo - المنصة المتكاملة",
@@ -239,8 +243,8 @@
       document.querySelector('header').textContent = t.header;
       document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.textContent = t.tabs[i]);
       const regionSelect = document.getElementById('region');
-      regionSelect.innerHTML = <option value="">${t.regionLabel}</option> +
-        t.regions.map(r => <option value="${r}">${r}</option>).join("");
+      regionSelect.innerHTML = `<option value="">${t.regionLabel}</option>` +
+        t.regions.map(r => `<option value="${r}">${r}</option>`).join("");
     }
 
     document.getElementById('language').addEventListener('change', (e) => {
@@ -249,6 +253,10 @@
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       updateLanguage(lang);
     });
+
+    // Set initial language and populate regions on page load
+    updateLanguage('ar');
+
   </script>
 
   <script async defer
