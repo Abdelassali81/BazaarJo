@@ -30,6 +30,7 @@
     }
     .tab-buttons {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
     }
     .tab-btn {
@@ -76,6 +77,11 @@
       <button class="tab-btn" data-target="cars">سيارات</button>
       <button class="tab-btn" data-target="services">خدمات</button>
       <button class="tab-btn" data-target="jobs">وظائف</button>
+      <button class="tab-btn" data-target="home-items">متعلقات منزلية</button>
+      <button class="tab-btn" data-target="electronics">أجهزة إلكترونية</button>
+      <button class="tab-btn" data-target="personal">مستلزمات شخصية</button>
+      <button class="tab-btn" data-target="clothing">ملابس وأحذية</button>
+      <button class="tab-btn" data-target="hobbies">هوايات وترفيه</button>
     </div>
     <select id="region"></select>
     <select id="language">
@@ -116,6 +122,15 @@
     <button id="applyFilters">تطبيق الفلاتر</button>
   </div>
 
+  <div class="filters" id="cars"></div>
+  <div class="filters" id="services"></div>
+  <div class="filters" id="jobs"></div>
+  <div class="filters" id="home-items"></div>
+  <div class="filters" id="electronics"></div>
+  <div class="filters" id="personal"></div>
+  <div class="filters" id="clothing"></div>
+  <div class="filters" id="hobbies"></div>
+
   <div id="map"></div>
 
   <script>
@@ -127,7 +142,10 @@
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         sections.forEach(s => s.classList.remove('active'));
-        document.getElementById(tab.dataset.target).classList.add('active');
+        const targetSection = document.getElementById(tab.dataset.target);
+        if (targetSection) {
+          targetSection.classList.add('active');
+        }
       });
     });
 
@@ -160,7 +178,7 @@
     const translations = {
       ar: {
         header: "BazaarJo - المنصة المتكاملة",
-        tabs: ["عقارات", "سيارات", "خدمات", "وظائف"],
+        tabs: ["عقارات", "سيارات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
         regionLabel: "اختر المنطقة",
         regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"],
         typePlaceholder: "نوع العقار",
@@ -172,7 +190,7 @@
       },
       en: {
         header: "BazaarJo - Integrated Platform",
-        tabs: ["Real Estate", "Cars", "Services", "Jobs"],
+        tabs: ["Real Estate", "Cars", "Services", "Jobs", "Home Items", "Electronics", "Personal Items", "Clothing & Shoes", "Hobbies & Entertainment"],
         regionLabel: "Select Region",
         regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"],
         typePlaceholder: "Property Type",
@@ -186,6 +204,7 @@
 
     function updateLanguage(lang) {
       const t = translations[lang];
+      document.title = t.header;
       document.querySelector('header').textContent = t.header;
       document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.textContent = t.tabs[i]);
 
