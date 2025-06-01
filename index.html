@@ -18,13 +18,36 @@
       font-size: 30px;
       font-weight: bold;
     }
-    .filters {
+    .tabs {
       display: flex;
+      justify-content: center;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .tabs button {
+      flex: 1;
+      padding: 15px;
+      font-size: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: #444;
+    }
+    .tabs button:hover,
+    .tabs button.active {
+      background: #eee;
+    }
+    .filters {
+      display: none;
       flex-wrap: wrap;
       gap: 10px;
       padding: 15px 20px;
       background: #fff;
       border-bottom: 1px solid #ddd;
+    }
+    .filters.active {
+      display: flex;
     }
     select, button {
       padding: 8px;
@@ -48,7 +71,13 @@
 <body>
   <header>BazaarJo - عقارات</header>
 
-  <!-- فلاتر قسم العقارات فقط -->
+  <!-- تبويبات الأقسام -->
+  <div class="tabs">
+    <button onclick="showSection('real-estate')">عقارات</button>
+    <button onclick="showSection('vehicles')">مركبات</button>
+  </div>
+
+  <!-- فلاتر قسم العقارات -->
   <div class="filters" id="real-estate">
     <select id="type-realestate">
       <option value="">نوع العقار</option>
@@ -80,40 +109,41 @@
     </select>
     <button id="applyFilters">تطبيق الفلاتر</button>
   </div>
-<!-- فلاتر قسم المركبات -->
-<div class="filters" id="vehicles">
-  <select id="vehicle-type">
-    <option value="">نوع المركبة</option>
-    <option value="سيارة">سيارة</option>
-    <option value="دراجة نارية">دراجة نارية</option>
-    <option value="شاحنة">شاحنة</option>
-    <option value="باص">باص</option>
-  </select>
-  <select id="brand">
-    <option value="">الماركة</option>
-    <option value="تويوتا">تويوتا</option>
-    <option value="هيونداي">هيونداي</option>
-    <option value="كيا">كيا</option>
-    <option value="نيسان">نيسان</option>
-    <option value="فورد">فورد</option>
-    <!-- أضف المزيد حسب الحاجة -->
-  </select>
-  <select id="year">
-    <option value="">سنة الصنع</option>
-    <option value="2025">2025</option>
-    <option value="2024">2024</option>
-    <option value="2023">2023</option>
-    <option value="2020-2022">2020 - 2022</option>
-    <option value="lt2020">قبل 2020</option>
-  </select>
-  <select id="price-vehicle">
-    <option value="">السعر</option>
-    <option value="lt5000">أقل من 5000</option>
-    <option value="5000-10000">من 5000 إلى 10000</option>
-    <option value="gt10000">أكثر من 10000</option>
-  </select>
-  <button id="applyVehicleFilters">تطبيق الفلاتر</button>
-</div>
+
+  <!-- فلاتر قسم المركبات -->
+  <div class="filters" id="vehicles">
+    <select id="vehicle-type">
+      <option value="">نوع المركبة</option>
+      <option value="سيارة">سيارة</option>
+      <option value="دراجة نارية">دراجة نارية</option>
+      <option value="شاحنة">شاحنة</option>
+      <option value="باص">باص</option>
+    </select>
+    <select id="brand">
+      <option value="">الماركة</option>
+      <option value="تويوتا">تويوتا</option>
+      <option value="هيونداي">هيونداي</option>
+      <option value="كيا">كيا</option>
+      <option value="نيسان">نيسان</option>
+      <option value="فورد">فورد</option>
+    </select>
+    <select id="year">
+      <option value="">سنة الصنع</option>
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+      <option value="2020-2022">2020 - 2022</option>
+      <option value="lt2020">قبل 2020</option>
+    </select>
+    <select id="price-vehicle">
+      <option value="">السعر</option>
+      <option value="lt5000">أقل من 5000</option>
+      <option value="5000-10000">من 5000 إلى 10000</option>
+      <option value="gt10000">أكثر من 10000</option>
+    </select>
+    <button id="applyVehicleFilters">تطبيق الفلاتر</button>
+  </div>
+
   <!-- خريطة -->
   <div id="map"></div>
 
@@ -143,6 +173,22 @@
         });
         return marker;
       });
+    });
+
+    function showSection(sectionId) {
+      document.querySelectorAll('.filters').forEach(el => el.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+
+      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
+      const tabButton = [...document.querySelectorAll('.tabs button')].find(btn =>
+        btn.textContent.includes(sectionId === 'real-estate' ? 'عقارات' : 'مركبات')
+      );
+      if (tabButton) tabButton.classList.add('active');
+    }
+
+    // أظهر قسم العقارات افتراضيًا
+    document.addEventListener('DOMContentLoaded', () => {
+      showSection('real-estate');
     });
   </script>
 
