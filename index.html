@@ -2,76 +2,88 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>BazaarJo - تصفح العقارات</title>
+  <title>BazaarJo - منصة متكاملة</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: #f5f5f5;
+      direction: rtl;
     }
     header {
       background: linear-gradient(90deg, #d81b60, #8e24aa);
       color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 30px;
+      padding: 15px 20px;
+      font-size: 24px;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      background: #fff;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
       user-select: none;
     }
+    nav button {
+      background: none;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      cursor: pointer;
+      color: #444;
+      transition: background 0.3s, color 0.3s;
+    }
+    nav button:hover, nav button.active {
+      background: #d81b60;
+      color: white;
+      font-weight: bold;
+    }
     .filters {
-      display: none;
-      flex-wrap: wrap;
-      gap: 20px;
+      background: white;
       padding: 20px;
-      background: #fff;
+      display: none;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
       border-bottom: 1px solid #ddd;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
     }
     .filters.active {
       display: flex;
     }
-    select {
+    select, input[type="number"], input[type="text"] {
       padding: 10px;
-      font-size: 14px;
+      font-size: 15px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      width: 200px;
+      width: 180px;
+      max-width: 90vw;
+      text-align: right;
     }
     #map {
-      height: 500px;
-      margin: 20px;
+      height: 400px;
+      margin: 20px auto;
+      max-width: 90vw;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .property-list {
-      display: none;
-      background: #fff;
-      padding: 20px;
-      margin: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-height: 400px;
-      overflow-y: auto;
-    }
-    .property-item {
-      border-bottom: 1px solid #ddd;
-      padding: 10px 0;
-      cursor: pointer;
-    }
-    .property-item:last-child {
-      border-bottom: none;
-    }
-    .property-item:hover {
-      background-color: #f0f0f0;
     }
   </style>
 </head>
 <body>
-  <header onclick="toggleView()">BazaarJo - تصفح العقارات</header>
 
-  <div class="filters" id="filters">
+  <header>BazaarJo - المنصة المتكاملة</header>
+
+  <nav>
+    <button class="tab-btn active" data-target="real-estate">عقارات</button>
+    <button class="tab-btn" data-target="cars">سيارات</button>
+    <button class="tab-btn" data-target="services">خدمات</button>
+    <button class="tab-btn" data-target="jobs">وظائف</button>
+  </nav>
+
+  <div id="real-estate" class="filters active">
     <select id="region">
       <option value="">اختر المنطقة</option>
       <option value="عمان">عمان</option>
@@ -79,7 +91,7 @@
       <option value="الزرقاء">الزرقاء</option>
     </select>
 
-    <select id="type">
+    <select id="type-realestate">
       <option value="">نوع العقار</option>
       <option value="أراضي سكنية">أراضي سكنية</option>
       <option value="أراضي تجارية">أراضي تجارية</option>
@@ -89,7 +101,7 @@
       <option value="مزارع">مزارع</option>
     </select>
 
-    <select id="price">
+    <select id="price-realestate">
       <option value="">السعر</option>
       <option value="lt50">أقل من 50 ألف</option>
       <option value="50-100">من 50 إلى 100 ألف</option>
@@ -112,112 +124,125 @@
     </select>
   </div>
 
+  <div id="cars" class="filters">
+    <select id="type-cars">
+      <option value="">نوع السيارة</option>
+      <option value="سيارات جديدة">سيارات جديدة</option>
+      <option value="سيارات مستعملة">سيارات مستعملة</option>
+    </select>
+
+    <select id="year-cars">
+      <option value="">سنة الصنع</option>
+      <option value="2024">2024</option>
+      <option value="2023">2023</option>
+      <option value="2022">2022</option>
+      <option value="2021">2021</option>
+      <option value="2020">2020</option>
+      <option value="lt2020">أقدم من 2020</option>
+    </select>
+
+    <select id="price-cars">
+      <option value="">السعر</option>
+      <option value="lt5000">أقل من 5 آلاف</option>
+      <option value="5000-15000">من 5 إلى 15 ألف</option>
+      <option value="gt15000">أكثر من 15 ألف</option>
+    </select>
+
+    <select id="condition-cars">
+      <option value="">حالة السيارة</option>
+      <option value="جديدة">جديدة</option>
+      <option value="مستعملة">مستعملة</option>
+    </select>
+  </div>
+
+  <div id="services" class="filters">
+    <select id="type-services">
+      <option value="">نوع الخدمة</option>
+      <option value="تنظيف">تنظيف</option>
+      <option value="صيانة">صيانة</option>
+      <option value="توصيل">توصيل</option>
+      <option value="تعليم">تعليم</option>
+    </select>
+
+    <select id="price-services">
+      <option value="">السعر</option>
+      <option value="lt50">أقل من 50</option>
+      <option value="50-200">من 50 إلى 200</option>
+      <option value="gt200">أكثر من 200</option>
+    </select>
+
+    <select id="location-services">
+      <option value="">الموقع</option>
+      <option value="عمان">عمان</option>
+      <option value="إربد">إربد</option>
+      <option value="الزرقاء">الزرقاء</option>
+    </select>
+  </div>
+
+  <div id="jobs" class="filters">
+    <select id="field-jobs">
+      <option value="">المجال</option>
+      <option value="تكنولوجيا">تكنولوجيا</option>
+      <option value="تسويق">تسويق</option>
+      <option value="تعليم">تعليم</option>
+      <option value="صحة">صحة</option>
+    </select>
+
+    <select id="type-jobs">
+      <option value="">نوع الوظيفة</option>
+      <option value="دوام كامل">دوام كامل</option>
+      <option value="دوام جزئي">دوام جزئي</option>
+      <option value="عقد">عقد</option>
+    </select>
+
+    <select id="salary-jobs">
+      <option value="">الراتب</option>
+      <option value="lt1000">أقل من 1000</option>
+      <option value="1000-3000">من 1000 إلى 3000</option>
+      <option value="gt3000">أكثر من 3000</option>
+    </select>
+
+    <select id="city-jobs">
+      <option value="">المدينة</option>
+      <option value="عمان">عمان</option>
+      <option value="إربد">إربد</option>
+      <option value="الزرقاء">الزرقاء</option>
+    </select>
+  </div>
+
   <div id="map"></div>
 
-  <div class="property-list" id="propertyList"></div>
-
   <script>
-    const listings = [
-      {
-        position: { lat: 31.95, lng: 35.91 },
-        title: "شقة في عمان - 100م²",
-        region: "عمان",
-        type: "شقق",
-        price: 90000,
-        area: 100,
-        rooms: 3,
-      },
-      {
-        position: { lat: 32.0, lng: 36.0 },
-        title: "أرض زراعية في الزرقاء",
-        region: "الزرقاء",
-        type: "أراضي زراعية",
-        price: 45000,
-        area: 300,
-        rooms: 0,
-      },
-      {
-        position: { lat: 32.55, lng: 35.85 },
-        title: "فيلا فاخرة في إربد - 250م²",
-        region: "إربد",
-        type: "فلل",
-        price: 150000,
-        area: 250,
-        rooms: 5,
-      },
-    ];
+    const tabs = document.querySelectorAll('nav button');
+    const filters = document.querySelectorAll('.filters');
 
-    let map;
-    let markers = [];
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // إزالة active من جميع الأزرار
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
 
+        // إخفاء جميع الفلاتر
+        filters.forEach(f => f.classList.remove('active'));
+
+        // إظهار الفلاتر الخاصة بالتبويب المحدد
+        const targetId = tab.getAttribute('data-target');
+        document.getElementById(targetId).classList.add('active');
+      });
+    });
+
+    // --- هنا تقدر تضيف كود جوجل مابس إذا تحب ---
     function initMap() {
       const center = { lat: 31.963158, lng: 35.930359 };
-      map = new google.maps.Map(document.getElementById("map"), {
+      const map = new google.maps.Map(document.getElementById("map"), {
         zoom: 8,
         center: center,
       });
-      renderMarkers(listings);
-    }
-
-    function clearMarkers() {
-      markers.forEach(marker => marker.setMap(null));
-      markers = [];
-    }
-
-    function renderMarkers(data) {
-      clearMarkers();
-      data.forEach(listing => {
-        const marker = new google.maps.Marker({
-          position: listing.position,
-          map: map,
-          title: listing.title
-        });
-        markers.push(marker);
-      });
-    }
-
-    function toggleView() {
-      const filters = document.getElementById('filters');
-      const propertyList = document.getElementById('propertyList');
-
-      // Toggle filters visibility
-      filters.classList.toggle('active');
-
-      // Toggle property list visibility
-      if (propertyList.style.display === "none" || propertyList.style.display === "") {
-        propertyList.style.display = "block";
-        renderPropertyList(listings);
-      } else {
-        propertyList.style.display = "none";
-      }
-    }
-
-    function renderPropertyList(data) {
-      const propertyList = document.getElementById('propertyList');
-      propertyList.innerHTML = '';
-
-      if(data.length === 0){
-        propertyList.innerHTML = '<p>لا توجد عقارات مطابقة</p>';
-        return;
-      }
-
-      data.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'property-item';
-        div.textContent = item.title;
-        div.onclick = () => {
-          // عند النقر على العقار، نحرك الخريطة ونفتح الماركر
-          map.setCenter(item.position);
-          map.setZoom(14);
-          // يمكن إضافة فتح info window لو تحب
-        };
-        propertyList.appendChild(div);
-      });
     }
   </script>
-
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
+
 </body>
 </html>
