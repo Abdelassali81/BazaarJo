@@ -41,6 +41,26 @@
       color: white;
       font-weight: bold;
     }
+
+    /* منطقة اختيار المنطقة ملتصقة تحت التنقل */
+    #region-wrapper {
+      background: white;
+      padding: 10px 20px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: right;
+    }
+    #region {
+      padding: 10px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 220px;
+      max-width: 90vw;
+      cursor: pointer;
+    }
+
     .filters {
       background: white;
       padding: 20px;
@@ -50,6 +70,8 @@
       justify-content: center;
       border-bottom: 1px solid #ddd;
       box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      max-width: 960px;
+      margin: 10px auto 0;
     }
     .filters.active {
       display: flex;
@@ -83,23 +105,14 @@
     <button class="tab-btn" data-target="jobs">وظائف</button>
   </nav>
 
-  <div id="real-estate" class="filters active">
+  <!-- منطقة اختيار المنطقة تظهر فوق الفلاتر مباشرة -->
+  <div id="region-wrapper">
     <select id="region">
-       <option value="">اختر المنطقة</option>
-  <option value="عمان">عمان</option>
-  <option value="الزرقاء">الزرقاء</option>
-  <option value="إربد">إربد</option>
-  <option value="البلقاء">البلقاء</option>
-  <option value="مادبا">مادبا</option>
-  <option value="العقبة">العقبة</option>
-  <option value="الكرك">الكرك</option>
-  <option value="معان">معان</option>
-  <option value="جرش">جرش</option>
-  <option value="المفرق">المفرق</option>
-  <option value="الطفيلة">الطفيلة</option>
-  <option value="عجلون">عجلون</option>
-</select>
+      <!-- هنا سيتم تعبئة الخيارات ديناميكياً -->
+    </select>
+  </div>
 
+  <div id="real-estate" class="filters active">
     <select id="type-realestate">
       <option value="">نوع العقار</option>
       <option value="أراضي سكنية">أراضي سكنية</option>
@@ -224,34 +237,59 @@
   <script>
     const tabs = document.querySelectorAll('nav button');
     const filters = document.querySelectorAll('.filters');
+    const regionSelect = document.getElementById('region');
+
+    // مدن الأردن كاملة للقسم العقارات (تستخدم أيضاً للأقسام التي تحتاج منطقة)
+    const citiesJordan = [
+      "عمان", "الزرقاء", "إربد", "البلقاء", "مادبا",
+      "العقبة", "الكرك", "معان", "جرش", "المفرق",
+      "الطفيلة", "عجلون"
+    ];
+
+    // مدن مخصصة للسيارات - ممكن تعدل حسب رغبتك
+    const citiesCars = ["عمان", "إربد", "الزرقاء"];
+
+    // مدن للخدمات
+    const citiesServices = ["عمان", "إربد", "الزرقاء"];
+
+    // مدن الوظائف (نفس مدن الأردن)
+    const citiesJobs = [...citiesJordan];
+
+    function fillRegions(cities) {
+      regionSelect.innerHTML = '<option value="">اختر المنطقة</option>';
+      cities.forEach(city => {
+        const opt = document.createElement('option');
+        opt.value = city;
+        opt.textContent = city;
+        regionSelect.appendChild(opt);
+      });
+    }
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        // إزالة active من جميع الأزرار
+        // تفعيل التاب النشط
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
 
         // إخفاء جميع الفلاتر
         filters.forEach(f => f.classList.remove('active'));
 
-        // إظهار الفلاتر الخاصة بالتبويب المحدد
+        // إظهار الفلتر النشط
         const targetId = tab.getAttribute('data-target');
         document.getElementById(targetId).classList.add('active');
+
+        // ملئ قائمة المناطق حسب القسم
+        if(targetId === 'real-estate') {
+          fillRegions(citiesJordan);
+        } else if(targetId === 'cars') {
+          fillRegions(citiesCars);
+        } else if(targetId === 'services') {
+          fillRegions(citiesServices);
+        } else if(targetId === 'jobs') {
+          fillRegions(citiesJobs);
+        }
       });
     });
 
-    // --- هنا تقدر تضيف كود جوجل مابس إذا تحب ---
-    function initMap() {
-      const center = { lat: 31.963158, lng: 35.930359 };
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: center,
-      });
-    }
-  </script>
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-  </script>
-
-</body>
-</html>
+    // تحميل الفلاتر للتاب الافتراضي (عقارات)
+    fillRegions(c
