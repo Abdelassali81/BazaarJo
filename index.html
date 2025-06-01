@@ -1,118 +1,90 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <title>BazaarJo - منصة متكاملة</title>
+  <meta charset="UTF-8">
+  <title>BazaarJo - المنصة المتكاملة</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0; padding: 0;
+      margin: 0;
+      padding: 0;
       background: #f5f5f5;
-      direction: rtl;
     }
     header {
       background: linear-gradient(90deg, #d81b60, #8e24aa);
       color: white;
-      padding: 15px 20px;
-      font-size: 24px;
-      font-weight: bold;
+      padding: 20px;
       text-align: center;
-      user-select: none;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-size: 30px;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
     nav {
       display: flex;
-      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 20px;
       background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      user-select: none;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
     }
-    nav button {
-      background: none;
+    .tab-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    .tab-btn {
+      padding: 8px 14px;
       border: none;
-      padding: 15px 25px;
-      font-size: 18px;
+      background: #eee;
       cursor: pointer;
-      color: #444;
-      transition: background 0.3s, color 0.3s;
+      border-radius: 5px;
     }
-    nav button:hover, nav button.active {
+    .tab-btn.active {
       background: #d81b60;
       color: white;
-      font-weight: bold;
     }
-
-    /* منطقة اختيار المنطقة ملتصقة تحت التنقل */
-    #region-wrapper {
-      background: white;
-      padding: 10px 20px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      max-width: 960px;
-      margin: 0 auto;
-      text-align: right;
-    }
-    #region {
-      padding: 10px;
-      font-size: 15px;
+    select {
+      padding: 8px;
+      font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      width: 220px;
-      max-width: 90vw;
-      cursor: pointer;
     }
-
     .filters {
-      background: white;
-      padding: 20px;
       display: none;
-      gap: 15px;
       flex-wrap: wrap;
-      justify-content: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: #fff;
       border-bottom: 1px solid #ddd;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-      max-width: 960px;
-      margin: 10px auto 0;
     }
     .filters.active {
       display: flex;
     }
-    select, input[type="number"], input[type="text"] {
-      padding: 10px;
-      font-size: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      width: 180px;
-      max-width: 90vw;
-      text-align: right;
-    }
     #map {
-      height: 400px;
-      margin: 20px auto;
-      max-width: 90vw;
+      height: 500px;
+      margin: 20px;
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-
   <header>BazaarJo - المنصة المتكاملة</header>
-
   <nav>
-    <button class="tab-btn active" data-target="real-estate">عقارات</button>
-    <button class="tab-btn" data-target="cars">سيارات</button>
-    <button class="tab-btn" data-target="services">خدمات</button>
-    <button class="tab-btn" data-target="jobs">وظائف</button>
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-target="real-estate">عقارات</button>
+      <button class="tab-btn" data-target="cars">سيارات</button>
+      <button class="tab-btn" data-target="services">خدمات</button>
+      <button class="tab-btn" data-target="jobs">وظائف</button>
+    </div>
+    <select id="region"></select>
+    <select id="language">
+      <option value="ar">العربية</option>
+      <option value="en">English</option>
+    </select>
   </nav>
 
-  <!-- منطقة اختيار المنطقة تظهر فوق الفلاتر مباشرة -->
-  <div id="region-wrapper">
-    <select id="region">
-      <!-- هنا سيتم تعبئة الخيارات ديناميكياً -->
-    </select>
-  </div>
-
-  <div id="real-estate" class="filters active">
+  <div class="filters active" id="real-estate">
     <select id="type-realestate">
       <option value="">نوع العقار</option>
       <option value="أراضي سكنية">أراضي سكنية</option>
@@ -122,21 +94,18 @@
       <option value="فلل">فلل</option>
       <option value="مزارع">مزارع</option>
     </select>
-
     <select id="price-realestate">
       <option value="">السعر</option>
       <option value="lt50">أقل من 50 ألف</option>
       <option value="50-100">من 50 إلى 100 ألف</option>
       <option value="gt100">أكثر من 100 ألف</option>
     </select>
-
     <select id="area">
       <option value="">المساحة</option>
       <option value="lt100">أقل من 100م²</option>
       <option value="100-200">من 100 إلى 200م²</option>
       <option value="gt200">أكثر من 200م²</option>
     </select>
-
     <select id="rooms">
       <option value="">عدد الغرف</option>
       <option value="1">1</option>
@@ -144,152 +113,108 @@
       <option value="3">3</option>
       <option value="4">4+</option>
     </select>
-  </div>
-
-  <div id="cars" class="filters">
-    <select id="type-cars">
-      <option value="">نوع السيارة</option>
-      <option value="سيارات جديدة">سيارات جديدة</option>
-      <option value="سيارات مستعملة">سيارات مستعملة</option>
-    </select>
-
-    <select id="year-cars">
-      <option value="">سنة الصنع</option>
-      <option value="2024">2024</option>
-      <option value="2023">2023</option>
-      <option value="2022">2022</option>
-      <option value="2021">2021</option>
-      <option value="2020">2020</option>
-      <option value="lt2020">أقدم من 2020</option>
-    </select>
-
-    <select id="price-cars">
-      <option value="">السعر</option>
-      <option value="lt5000">أقل من 5 آلاف</option>
-      <option value="5000-15000">من 5 إلى 15 ألف</option>
-      <option value="gt15000">أكثر من 15 ألف</option>
-    </select>
-
-    <select id="condition-cars">
-      <option value="">حالة السيارة</option>
-      <option value="جديدة">جديدة</option>
-      <option value="مستعملة">مستعملة</option>
-    </select>
-  </div>
-
-  <div id="services" class="filters">
-    <select id="type-services">
-      <option value="">نوع الخدمة</option>
-      <option value="تنظيف">تنظيف</option>
-      <option value="صيانة">صيانة</option>
-      <option value="توصيل">توصيل</option>
-      <option value="تعليم">تعليم</option>
-    </select>
-
-    <select id="price-services">
-      <option value="">السعر</option>
-      <option value="lt50">أقل من 50</option>
-      <option value="50-200">من 50 إلى 200</option>
-      <option value="gt200">أكثر من 200</option>
-    </select>
-
-    <select id="location-services">
-      <option value="">الموقع</option>
-      <option value="عمان">عمان</option>
-      <option value="إربد">إربد</option>
-      <option value="الزرقاء">الزرقاء</option>
-    </select>
-  </div>
-
-  <div id="jobs" class="filters">
-    <select id="field-jobs">
-      <option value="">المجال</option>
-      <option value="تكنولوجيا">تكنولوجيا</option>
-      <option value="تسويق">تسويق</option>
-      <option value="تعليم">تعليم</option>
-      <option value="صحة">صحة</option>
-    </select>
-
-    <select id="type-jobs">
-      <option value="">نوع الوظيفة</option>
-      <option value="دوام كامل">دوام كامل</option>
-      <option value="دوام جزئي">دوام جزئي</option>
-      <option value="عقد">عقد</option>
-    </select>
-
-    <select id="salary-jobs">
-      <option value="">الراتب</option>
-      <option value="lt1000">أقل من 1000</option>
-      <option value="1000-3000">من 1000 إلى 3000</option>
-      <option value="gt3000">أكثر من 3000</option>
-    </select>
-
-    <select id="city-jobs">
-      <option value="">المدينة</option>
-      <option value="عمان">عمان</option>
-      <option value="إربد">إربد</option>
-      <option value="الزرقاء">الزرقاء</option>
-    </select>
+    <button id="applyFilters">تطبيق الفلاتر</button>
   </div>
 
   <div id="map"></div>
 
   <script>
-    const tabs = document.querySelectorAll('nav button');
-    const filters = document.querySelectorAll('.filters');
-    const regionSelect = document.getElementById('region');
-
-    // مدن الأردن كاملة للقسم العقارات (تستخدم أيضاً للأقسام التي تحتاج منطقة)
-    const citiesJordan = [
-      "عمان", "الزرقاء", "إربد", "البلقاء", "مادبا",
-      "العقبة", "الكرك", "معان", "جرش", "المفرق",
-      "الطفيلة", "عجلون"
-    ];
-
-    // مدن مخصصة للسيارات - ممكن تعدل حسب رغبتك
-    const citiesCars = ["عمان", "إربد", "الزرقاء"];
-
-    // مدن للخدمات
-    const citiesServices = ["عمان", "إربد", "الزرقاء"];
-
-    // مدن الوظائف (نفس مدن الأردن)
-    const citiesJobs = [...citiesJordan];
-
-    function fillRegions(cities) {
-      regionSelect.innerHTML = '<option value="">اختر المنطقة</option>';
-      cities.forEach(city => {
-        const opt = document.createElement('option');
-        opt.value = city;
-        opt.textContent = city;
-        regionSelect.appendChild(opt);
-      });
-    }
+    const tabs = document.querySelectorAll('.tab-btn');
+    const sections = document.querySelectorAll('.filters');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
-        // تفعيل التاب النشط
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-
-        // إخفاء جميع الفلاتر
-        filters.forEach(f => f.classList.remove('active'));
-
-        // إظهار الفلتر النشط
-        const targetId = tab.getAttribute('data-target');
-        document.getElementById(targetId).classList.add('active');
-
-        // ملئ قائمة المناطق حسب القسم
-        if(targetId === 'real-estate') {
-          fillRegions(citiesJordan);
-        } else if(targetId === 'cars') {
-          fillRegions(citiesCars);
-        } else if(targetId === 'services') {
-          fillRegions(citiesServices);
-        } else if(targetId === 'jobs') {
-          fillRegions(citiesJobs);
-        }
+        sections.forEach(s => s.classList.remove('active'));
+        document.getElementById(tab.dataset.target).classList.add('active');
       });
     });
 
-    // تحميل الفلاتر للتاب الافتراضي (عقارات)
-    fillRegions(c
+    function initMap() {
+      const center = { lat: 31.963158, lng: 35.930359 };
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 8,
+        center: center,
+      });
+      window.map = map;
+      window.markers = [];
+    }
+
+    document.getElementById("applyFilters").addEventListener("click", () => {
+      const listings = [
+        { lat: 31.95, lng: 35.91, title: "شقة في عمان - 100م²" },
+        { lat: 32.0, lng: 36.0, title: "أرض زراعية في الزرقاء" }
+      ];
+      window.markers.forEach(m => m.setMap(null));
+      window.markers = listings.map(loc => {
+        const marker = new google.maps.Marker({
+          position: { lat: loc.lat, lng: loc.lng },
+          map: window.map,
+          title: loc.title
+        });
+        return marker;
+      });
+    });
+
+    const translations = {
+      ar: {
+        header: "BazaarJo - المنصة المتكاملة",
+        tabs: ["عقارات", "سيارات", "خدمات", "وظائف"],
+        regionLabel: "اختر المنطقة",
+        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"],
+        typePlaceholder: "نوع العقار",
+        typeOptions: ["أراضي سكنية","أراضي تجارية","أراضي زراعية","شقق","فلل","مزارع"],
+        pricePlaceholder: "السعر",
+        areaPlaceholder: "المساحة",
+        roomsPlaceholder: "عدد الغرف",
+        applyFilters: "تطبيق الفلاتر"
+      },
+      en: {
+        header: "BazaarJo - Integrated Platform",
+        tabs: ["Real Estate", "Cars", "Services", "Jobs"],
+        regionLabel: "Select Region",
+        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"],
+        typePlaceholder: "Property Type",
+        typeOptions: ["Residential Land","Commercial Land","Agricultural Land","Apartments","Villas","Farms"],
+        pricePlaceholder: "Price",
+        areaPlaceholder: "Area",
+        roomsPlaceholder: "Rooms",
+        applyFilters: "Apply Filters"
+      }
+    };
+
+    function updateLanguage(lang) {
+      const t = translations[lang];
+      document.querySelector('header').textContent = t.header;
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.textContent = t.tabs[i]);
+
+      const regionSelect = document.getElementById('region');
+      regionSelect.innerHTML = `<option value="">${t.regionLabel}</option>` +
+        t.regions.map(r => `<option value="${r}">${r}</option>`).join("");
+
+      document.getElementById('type-realestate').innerHTML =
+        `<option value="">${t.typePlaceholder}</option>` +
+        t.typeOptions.map(opt => `<option value="${opt}">${opt}</option>`).join("");
+
+      document.getElementById('price-realestate').options[0].text = t.pricePlaceholder;
+      document.getElementById('area').options[0].text = t.areaPlaceholder;
+      document.getElementById('rooms').options[0].text = t.roomsPlaceholder;
+      document.getElementById('applyFilters').textContent = t.applyFilters;
+    }
+
+    document.getElementById('language').addEventListener('change', (e) => {
+      const lang = e.target.value;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      updateLanguage(lang);
+    });
+
+    updateLanguage('ar');
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
+</body>
+</html>
