@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>BazaarJo - المنصة المتكاملة</title>
   <style>
     body {
@@ -39,7 +39,6 @@
       background: #eee;
       cursor: pointer;
       border-radius: 5px;
-      user-select: none;
     }
     .tab-btn.active {
       background: #d81b60;
@@ -50,7 +49,6 @@
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 5px;
-      min-width: 150px;
     }
     .filters {
       display: none;
@@ -86,7 +84,7 @@
       <button class="tab-btn" data-target="hobbies">هوايات وترفيه</button>
     </div>
     <select id="region"></select>
-    <select id="language" aria-label="اختر اللغة">
+    <select id="language">
       <option value="ar">العربية</option>
       <option value="en">English</option>
     </select>
@@ -219,13 +217,42 @@
       alert("تم اختيار الخدمة: " + selected);
     });
 
+    updateLanguage('ar'); // تأكيد تشغيل اللغة عند البدء
+
     const translations = {
       ar: {
         header: "BazaarJo - المنصة المتكاملة",
         tabs: ["عقارات", "سيارات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
         regionLabel: "اختر المنطقة",
-        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"],
-        filters: {
-          "real-estate": {
-            "type-realestate": ["نوع العقار","أراضي سكنية","أراضي تجارية","أراضي زراعية","شقق","فلل","مزارع"],
-            "price-realestate":
+        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"]
+      },
+      en: {
+        header: "BazaarJo - Integrated Platform",
+        tabs: ["Real Estate", "Cars", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
+        regionLabel: "Select Region",
+        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"]
+      }
+    };
+
+    function updateLanguage(lang) {
+      const t = translations[lang];
+      document.querySelector('header').textContent = t.header;
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.textContent = t.tabs[i]);
+      const regionSelect = document.getElementById('region');
+      regionSelect.innerHTML = <option value="">${t.regionLabel}</option> +
+        t.regions.map(r => <option value="${r}">${r}</option>).join("");
+    }
+
+    document.getElementById('language').addEventListener('change', (e) => {
+      const lang = e.target.value;
+      document.documentElement.lang = lang;
+      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+      updateLanguage(lang);
+    });
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
+</body>
+</html>
