@@ -5,327 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>BazaarJo - المنصة المتكاملة</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    header {
-      background: linear-gradient(90deg, #d81b60, #8e24aa);
-      color: white;
-      padding: 20px;
-      text-align: center;
-      font-size: 30px;
-      font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-      flex-shrink: 0;
-    }
-    nav {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      padding: 10px 20px;
-      background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-      flex-shrink: 0;
-      justify-content: space-between;
-    }
-    .tab-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      flex-grow: 1;
-      min-width: 200px;
-    }
-    .tab-btn {
-      padding: 8px 14px;
-      border: none;
-      background: #eee;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s;
-      white-space: nowrap;
-    }
-    .tab-btn.active {
-      background: #d81b60;
-      color: white;
-    }
-    select {
-      padding: 8px;
-      font-size: 14px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      min-width: 130px;
-    }
-    .filters {
-      display: none;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 10px 20px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-      flex-shrink: 0;
-    }
-    .filters.active {
-      display: flex;
-    }
-    #map {
-      height: 500px;
-      margin: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      flex-grow: 1;
-      min-height: 300px;
-    }
-    button.apply-btn {
-      background-color: #d81b60;
-      border: none;
-      color: white;
-      padding: 8px 16px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    button.apply-btn:hover {
-      background-color: #a31648;
-    }
-    /* Responsive */
-    @media (max-width: 768px) {
-      nav {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-      }
-      .tab-buttons {
-        overflow-x: auto;
-        max-width: 100%;
-      }
-      .tab-btn {
-        flex: 0 0 auto;
-      }
-      .filters {
-        flex-direction: column;
-      }
-      select, button.apply-btn {
-        width: 100%;
-        max-width: none;
-      }
-      #map {
-        margin: 10px;
-        height: 300px;
-      }
-    }
-
-    /* Toast message */
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #d81b60;
-      color: white;
-      padding: 12px 24px;
-      border-radius: 30px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      z-index: 1000;
-      font-size: 16px;
-    }
-    #toast.show {
-      opacity: 1;
-      pointer-events: auto;
-    }
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f5f5f5; }
+    header { background:#d81b60; color:#fff; padding:20px; text-align:center; font-size:24px; }
+    nav { background:#fff; display:flex; flex-wrap:wrap; gap:10px; padding:10px; }
+    .tab-btn { background:#eee; border:none; padding:10px 15px; cursor:pointer; border-radius:5px; }
+    .tab-btn.active { background:#d81b60; color:#fff; }
+    #filters-container { background:#fff; padding:10px 20px; margin:10px 0; display:flex; flex-wrap:wrap; gap:15px; border-radius:5px; }
+    #filters-container > div { min-width:150px; flex:1 1 150px; }
+    select { width:100%; padding:7px; border-radius:4px; border:1px solid #ccc; }
+    button.apply-btn { background:#d81b60; color:#fff; border:none; padding:10px 20px; cursor:pointer; border-radius:5px; }
   </style>
 </head>
 <body>
-  <header>BazaarJo - المنصة المتكاملة</header>
 
-  <nav>
-    <div class="tab-buttons" role="tablist" aria-label="أقسام المنصة">
-      <button class="tab-btn active" data-target="real-estate" role="tab" aria-selected="true" tabindex="0">عقارات</button>
-      <button class="tab-btn" data-target="cars" role="tab" aria-selected="false" tabindex="-1">سيارات</button>
-      <button class="tab-btn" data-target="services" role="tab" aria-selected="false" tabindex="-1">خدمات</button>
-      <button class="tab-btn" data-target="jobs" role="tab" aria-selected="false" tabindex="-1">وظائف</button>
-      <button class="tab-btn" data-target="home" role="tab" aria-selected="false" tabindex="-1">متعلقات منزلية</button>
-      <button class="tab-btn" data-target="electronics" role="tab" aria-selected="false" tabindex="-1">أجهزة إلكترونية</button>
-      <button class="tab-btn" data-target="personal" role="tab" aria-selected="false" tabindex="-1">مستلزمات شخصية</button>
-      <button class="tab-btn" data-target="clothes" role="tab" aria-selected="false" tabindex="-1">ملابس وأحذية</button>
-      <button class="tab-btn" data-target="hobbies" role="tab" aria-selected="false" tabindex="-1">هوايات وترفيه</button>
-    </div>
+<header id="header">BazaarJo - المنصة المتكاملة</header>
 
-    <select id="region" aria-label="اختيار المنطقة"></select>
+<nav aria-label="أقسام المنصة">
+  <button class="tab-btn active" data-target="real-estate" aria-selected="true">عقارات</button>
+  <button class="tab-btn" data-target="cars" aria-selected="false">سيارات</button>
+  <button class="tab-btn" data-target="services" aria-selected="false">خدمات</button>
+  <button class="tab-btn" data-target="jobs" aria-selected="false">وظائف</button>
+</nav>
 
-    <select id="language" aria-label="اختيار اللغة">
-      <option value="ar">العربية</option>
-      <option value="en">English</option>
-    </select>
-  </nav>
+<div id="filters-container" aria-live="polite" aria-atomic="true">
+  <!-- هنا ستظهر الفلاتر -->
+</div>
 
-  <!-- فلاتر ديناميكية تظهر حسب التبويب -->
-  <div id="filters-container" class="filters active" aria-live="polite" aria-atomic="true">
-    <!-- سيتم إنشاء الفلاتر هنا -->
-  </div>
-
-  <div id="map" role="application" aria-label="خريطة الإعلانات"></div>
-
-  <div id="toast" role="alert" aria-live="assertive"></div>
-
-  <script>
-    const translations = {
-      ar: {
-        header: "BazaarJo - المنصة المتكاملة",
-        tabs: ["عقارات", "سيارات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
-        regionLabel: "اختر المنطقة",
-        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"],
-        filters: {
-          "real-estate": [
-            { id: "type-realestate", label: "نوع العقار", options: ["", "أراضي سكنية","أراضي تجارية","أراضي زراعية","شقق","فلل","مزارع"] },
-            { id: "price-realestate", label: "السعر", options: ["", "أقل من 50 ألف","من 50 إلى 100 ألف","أكثر من 100 ألف"] },
-            { id: "area", label: "المساحة", options: ["", "أقل من 100م²","من 100 إلى 200م²","أكثر من 200م²"] },
-            { id: "rooms", label: "عدد الغرف", options: ["", "1","2","3","4+"] }
-          ],
-          "services": [
-            { id: "service-type", label: "نوع الخدمة", options: [
-              "", "كهربائي","سباك","نجار","حداد","تكييف وتبريد","صيانة أجهزة منزلية","دهان وتشطيب","تنظيف منازل",
-              "نقل عفش","مكافحة حشرات","غسيل سجاد وستائر","محاسبة","استشارات قانونية","تصميم جرافيك","تسويق إلكتروني",
-              "تطوير مواقع وتطبيقات","ميكانيكي سيارات","كهربائي سيارات","غسيل سيارات متنقل","إكسسوارات سيارات",
-              "دروس خصوصية","تدريب مهني","تعليم لغات","استشارات دراسية","مساج","عناية بالبشرة","كوافير",
-              "تركيب أظافر / رموش / شعر","تدريب كلاب","عناية بيطرية","استضافة حيوانات"
-            ]}
-          ]
-        },
-        applyBtn: "تطبيق الفلاتر",
-        underDevelopment: "قسم {section} (قيد التطوير)",
-        toastFilterApplied: "تم تطبيق الفلاتر بنجاح!",
-        toastServiceSelected: "تم اختيار الخدمة: {service}"
+<script>
+  // ترجمة مبسطة (فقط بعض الفلاتر لتجربة)
+  const translations = {
+    ar: {
+      header: "BazaarJo - المنصة المتكاملة",
+      filters: {
+        "real-estate": [
+          { id: "type-realestate", label: "نوع العقار", options: ["", "أراضي سكنية", "شقق", "فلل"] },
+          { id: "price-realestate", label: "السعر", options: ["", "أقل من 50 ألف", "من 50 إلى 100 ألف", "أكثر من 100 ألف"] }
+        ],
+        "services": [
+          { id: "service-type", label: "نوع الخدمة", options: ["", "كهربائي", "سباك", "نجار"] }
+        ]
       },
-      en: {
-        header: "BazaarJo - Integrated Platform",
-        tabs: ["Real Estate", "Cars", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
-        regionLabel: "Select Region",
-        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"],
-        filters: {
-          "real-estate": [
-            { id: "type-realestate", label: "Property Type", options: ["", "Residential Land","Commercial Land","Agricultural Land","Apartments","Villas","Farms"] },
-            { id: "price-realestate", label: "Price", options: ["", "Less than 50K","50K - 100K","More than 100K"] },
-            { id: "area", label: "Area", options: ["", "Less than 100m²","100 - 200m²","More than 200m²"] },
-            { id: "rooms", label: "Rooms", options: ["", "1","2","3","4+"] }
-          ],
-          "services": [
-            { id: "service-type", label: "Service Type", options: [
-              "", "Electrician","Plumber","Carpenter","Blacksmith","AC & Cooling","Home Appliance Repair","Painting & Finishing",
-              "House Cleaning","Furniture Moving","Pest Control","Carpet & Curtain Cleaning","Accounting","Legal Consulting",
-              "Graphic Design","Digital Marketing","Web & App Development","Car Mechanic","Car Electrician","Mobile Car Wash",
-              "Car Accessories","Private Lessons","Vocational Training","Language Teaching","Study Consulting","Massage",
-              "Skin Care","Hairdresser","Nail / Lash / Hair Extensions","Dog Training","Veterinary Care","Pet Hosting"
-            ]}
-          ]
-        },
-        applyBtn: "Apply Filters",
-        underDevelopment: "{section} section (Under Development)",
-        toastFilterApplied: "Filters applied successfully!",
-        toastServiceSelected: "Selected service: {service}"
-      }
+      applyBtn: "تطبيق الفلاتر"
+    }
+  };
+
+  let currentLang = 'ar';
+  let currentTab = 'real-estate';
+
+  const headerEl = document.getElementById('header');
+  const tabs = document.querySelectorAll('.tab-btn');
+  const filtersContainer = document.getElementById('filters-container');
+
+  // وظيفة إنشاء select مع label
+  function createSelect({id, label, options}) {
+    const container = document.createElement('div');
+    const select = document.createElement('select');
+    select.id = id;
+    select.name = id;
+    select.setAttribute('aria-label', label);
+    options.forEach(opt => {
+      const option = document.createElement('option');
+      option.value = opt;
+      option.textContent = opt === "" ? label : opt;
+      select.appendChild(option);
+    });
+    container.appendChild(select);
+    return container;
+  }
+
+  // رسم الفلاتر
+  function renderFilters(tab) {
+    currentTab = tab;
+    filtersContainer.innerHTML = ''; // نظف المحتوى القديم
+    const t = translations[currentLang];
+    if (!t.filters[tab]) {
+      filtersContainer.textContent = 'لا توجد فلاتر لهذا القسم حالياً.';
+      return;
+    }
+    t.filters[tab].forEach(filter => {
+      filtersContainer.appendChild(createSelect(filter));
+    });
+    const applyBtn = document.createElement('button');
+    applyBtn.textContent = t.applyBtn;
+    applyBtn.className = 'apply-btn';
+    filtersContainer.appendChild(applyBtn);
+
+    applyBtn.onclick = () => {
+      alert('تم تطبيق الفلاتر!');
     };
+  }
 
-    // حفظ الحالة العالمية
-    let currentLang = localStorage.getItem('bazaarLang') || 'ar';
-    let currentTab = 'real-estate';
-
-    // عناصر الواجهة
-    const headerEl = document.querySelector('header');
-    const tabs = document.querySelectorAll('.tab-btn');
-    const regionSelect = document.getElementById('region');
-    const languageSelect = document.getElementById('language');
-    const filtersContainer = document.getElementById('filters-container');
-    const toastEl = document.getElementById('toast');
-
-    // تحديث اللغة وتحديث النصوص
-    function updateLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem('bazaarLang', lang);
-      const t = translations[lang];
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      headerEl.textContent = t.header;
-      tabs.forEach((btn, i) => {
-        btn.textContent = t.tabs[i];
-        btn.setAttribute('aria-selected', btn.classList.contains('active') ? "true" : "false");
+  // التبديل بين التبويبات
+  tabs.forEach(tabBtn => {
+    tabBtn.addEventListener('click', () => {
+      tabs.forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
       });
-      // تعبئة المناطق
-      regionSelect.innerHTML = `<option value="">${t.regionLabel}</option>` +
-        t.regions.map(r => `<option value="${r}">${r}</option>`).join("");
-      languageSelect.value = lang;
+      tabBtn.classList.add('active');
+      tabBtn.setAttribute('aria-selected', 'true');
+      renderFilters(tabBtn.dataset.target);
+    });
+  });
 
-      // إعادة رسم الفلاتر
-      renderFilters(currentTab);
-    }
+  // تهيئة الصفحة
+  headerEl.textContent = translations[currentLang].header;
+  renderFilters(currentTab);
+</script>
 
-    // إنشاء عنصر select مع خيارات
-    function createSelect({ id, label, options }) {
-      const container = document.createElement('div');
-      container.style.flex = '1 1 150px';
-      const select = document.createElement('select');
-      select.id = id;
-      select.name = id;
-      select.setAttribute('aria-label', label);
-
-      options.forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt;
-        option.textContent = opt === "" ? label : opt;
-        select.appendChild(option);
-      });
-
-      container.appendChild(select);
-      return container;
-    }
-
-    // زر تطبيق الفلاتر
-    function createApplyButton() {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'apply-btn';
-      btn.textContent = translations[currentLang].applyBtn;
-      return btn;
-    }
-
-    // إنشاء رسالة داخل الصفحة (toast)
-    function showToast(message) {
-      toastEl.textContent = message;
-      toastEl.classList.add('show');
-      clearTimeout(toastEl.hideTimeout);
-      toastEl.hideTimeout = setTimeout(() => {
-        toastEl.classList.remove('show');
-      }, 3000);
-    }
-
-    // رسم الفلاتر حسب التبويب
-    function renderFilters(tab) {
-      currentTab = tab;
-      filtersContainer.innerHTML = ''; // مسح القديم
-      const t = translations[currentLang];
-
-      if (t.filters[tab]) {
-        // إذا القسم لديه فلاتر
-        const filters = t.filters[tab];
-        filters.forEach(f => {
-          filtersContainer.appendChild(createSelect(f));
-        });
-
-        const applyBtn = createApplyButton();
-        filtersContainer.appendChild(applyBtn);
-
-        // استمع لزر التطبيق
-        applyBtn.onclick = () => {
-          if (tab === 'services') {
-            const serviceType = document.getElementById('service-type').value;
-            if(serviceType) {
-              show
+</body>
+</html>
