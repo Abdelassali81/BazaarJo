@@ -1,24 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BazaarJo - المنصة الأردنية للإعلانات</title>
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <header>
-    <div class="container">
-      <h1>BazaarJo</h1>
-      <input type="text" placeholder="ابحث عن سيارة، عقار، خدمة..." />
-      <button class="post-ad">+ أضف إعلانك</button>
-    </div>
-  </header>
-
-  <nav class="categories">
-    <div class="container">
-      <a href="#">🏠 عقارات</a>
-        <style>
+  <meta charset="UTF-8" />
+  <title>BazaarJo - تصفح العقارات</title>
+  <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
@@ -33,14 +18,19 @@
       font-size: 30px;
       font-weight: bold;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      user-select: none;
     }
     .filters {
-      display: flex;
+      display: none;
       flex-wrap: wrap;
       gap: 20px;
       padding: 20px;
       background: #fff;
       border-bottom: 1px solid #ddd;
+    }
+    .filters.active {
+      display: flex;
     }
     select {
       padding: 10px;
@@ -55,12 +45,33 @@
       border-radius: 10px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
+    .property-list {
+      display: none;
+      background: #fff;
+      padding: 20px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .property-item {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+      cursor: pointer;
+    }
+    .property-item:last-child {
+      border-bottom: none;
+    }
+    .property-item:hover {
+      background-color: #f0f0f0;
+    }
   </style>
 </head>
 <body>
-  <header>BazaarJo - تصفح العقارات</header>
+  <header onclick="toggleView()">BazaarJo - تصفح العقارات</header>
 
-  <div class="filters">
+  <div class="filters" id="filters">
     <select id="region">
       <option value="">اختر المنطقة</option>
       <option value="عمان">عمان</option>
@@ -103,138 +114,110 @@
 
   <div id="map"></div>
 
+  <div class="property-list" id="propertyList"></div>
+
   <script>
+    const listings = [
+      {
+        position: { lat: 31.95, lng: 35.91 },
+        title: "شقة في عمان - 100م²",
+        region: "عمان",
+        type: "شقق",
+        price: 90000,
+        area: 100,
+        rooms: 3,
+      },
+      {
+        position: { lat: 32.0, lng: 36.0 },
+        title: "أرض زراعية في الزرقاء",
+        region: "الزرقاء",
+        type: "أراضي زراعية",
+        price: 45000,
+        area: 300,
+        rooms: 0,
+      },
+      {
+        position: { lat: 32.55, lng: 35.85 },
+        title: "فيلا فاخرة في إربد - 250م²",
+        region: "إربد",
+        type: "فلل",
+        price: 150000,
+        area: 250,
+        rooms: 5,
+      },
+    ];
+
+    let map;
+    let markers = [];
+
     function initMap() {
       const center = { lat: 31.963158, lng: 35.930359 };
-      const map = new google.maps.Map(document.getElementById("map"), {
+      map = new google.maps.Map(document.getElementById("map"), {
         zoom: 8,
         center: center,
       });
+      renderMarkers(listings);
+    }
 
-      // عينة من الإعلانات المرتبطة بالخريطة
-      const listings = [
-        { position: { lat: 31.95, lng: 35.91 }, title: "شقة في عمان - 100م²" },
-        { position: { lat: 32.0, lng: 36.0 }, title: "أرض زراعية في الزرقاء" },
-      ];
+    function clearMarkers() {
+      markers.forEach(marker => marker.setMap(null));
+      markers = [];
+    }
 
-      listings.forEach(listing => {
-        new google.maps.Marker({
+    function renderMarkers(data) {
+      clearMarkers();
+      data.forEach(listing => {
+        const marker = new google.maps.Marker({
           position: listing.position,
           map: map,
           title: listing.title
         });
+        markers.push(marker);
+      });
+    }
+
+    function toggleView() {
+      const filters = document.getElementById('filters');
+      const propertyList = document.getElementById('propertyList');
+
+      // Toggle filters visibility
+      filters.classList.toggle('active');
+
+      // Toggle property list visibility
+      if (propertyList.style.display === "none" || propertyList.style.display === "") {
+        propertyList.style.display = "block";
+        renderPropertyList(listings);
+      } else {
+        propertyList.style.display = "none";
+      }
+    }
+
+    function renderPropertyList(data) {
+      const propertyList = document.getElementById('propertyList');
+      propertyList.innerHTML = '';
+
+      if(data.length === 0){
+        propertyList.innerHTML = '<p>لا توجد عقارات مطابقة</p>';
+        return;
+      }
+
+      data.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'property-item';
+        div.textContent = item.title;
+        div.onclick = () => {
+          // عند النقر على العقار، نحرك الخريطة ونفتح الماركر
+          map.setCenter(item.position);
+          map.setZoom(14);
+          // يمكن إضافة فتح info window لو تحب
+        };
+        propertyList.appendChild(div);
       });
     }
   </script>
+
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
-</body>
-</html>
-
-      <a href="#">🚗 سيارات</a>
-      <!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8">
-  <style>
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .menu {
-      position: relative;
-      display: inline-block;
-    }
-
-    .menu > button {
-      background-color: #d81b60;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 8px;
-    }
-
-    .submenu {
-      display: none;
-      position: absolute;
-      background-color: white;
-      min-width: 200px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 1;
-      border-radius: 8px;
-    }
-
-    .submenu li {
-      padding: 10px;
-      border-bottom: 1px solid #eee;
-      cursor: pointer;
-    }
-
-    .submenu li:hover {
-      background-color: #f2f2f2;
-    }
-
-    .menu:hover .submenu {
-      display: block;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="menu">
-    <button>السيارات</button>
-    <ul class="submenu">
-      <li>سيارات</li>
-      <li>قطع غيار واكسسوارات سيارات</li>
-      <li>قوارب</li>
-      <li>قطع ومستلزمات قوارب</li>
-      <li>كرافانات ومنازل متنقلة</li>
-      <li>دراجات نارية خفيفة وA-تراكتور</li>
-      <li>دراجات نارية</li>
-      <li>قطع واكسسوارات دراجات نارية</li>
-      <li>شاحنات وآليات ومعدات ثقيلة</li>
-      <li>معدات زراعية وغابات</li>
-      <li>دراجات ثلجية</li>
-      <li>قطع واكسسوارات دراجات ثلجية</li>
-    </ul>
-  </div>
-
-</body>
-</html>
-      <a href="#">🛠️ خدمات</a>
-      <a href="#">💼 وظائف</a>
-    </div>
-  </nav>
-
-  <section class="featured">
-    <div class="container">
-      <h2>إعلانات مميزة</h2>
-      <div class="ads">
-        <div class="ad">
-          <img src="https://via.placeholder.com/200x150" alt="Ad">
-          <p>شقة للبيع في عمان الغربية</p>
-        </div>
-        <div class="ad">
-          <img src="https://via.placeholder.com/200x150" alt="Ad">
-          <p>سيارة كيا 2019 بحالة ممتازة</p>
-        </div>
-        <div class="ad">
-          <img src="https://via.placeholder.com/200x150" alt="Ad">
-          <p>خدمة صيانة منزلية</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p>© 2025 BazaarJo. جميع الحقوق محفوظة.</p>
-    </div>
-  </footer>
 </body>
 </html>
