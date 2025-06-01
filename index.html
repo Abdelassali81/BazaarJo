@@ -1,14 +1,87 @@
-<div class="search-container">
-  <!-- فلتر الموقع المشترك -->
-  <div class="location-filter">
-    <label>الموقع</label>
-    <select>
-      <option value="">اختر الموقع</option>
-      <option value="amman">عمّان</option>
-      <option value="irbid">إربد</option>
-      <option value="zarqa">الزرقاء</option>
-      <!-- مدن أخرى -->
-    </select>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <title>BazaarJo - أقسام متعددة</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+    header {
+      background: linear-gradient(90deg, #d81b60, #8e24aa);
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+    }
+    .tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .tabs button {
+      flex: 1 1 120px;
+      padding: 15px;
+      font-size: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      color: #444;
+    }
+    .tabs button:hover,
+    .tabs button.active {
+      background: #eee;
+    }
+    .filters {
+      display: none;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 15px 20px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .filters.active {
+      display: flex;
+    }
+    select, button {
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #d81b60;
+      color: white;
+      cursor: pointer;
+    }
+    #map {
+      height: 500px;
+      margin: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <header>BazaarJo - أقسام متعددة</header>
+  <div class="search-container">
+    <div class="location-filter">
+      <label>الموقع</label>
+      <select>
+        <option value="">اختر الموقع</option>
+        <option value="amman">عمّان</option>
+        <option value="irbid">إربد</option>
+        <option value="zarqa">الزرقاء</option>
+        <!-- مدن أخرى -->
+      </select>
+    </div>
   </div>
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
