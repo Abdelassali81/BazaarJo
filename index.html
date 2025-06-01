@@ -1,9 +1,8 @@
-You said:
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>BazaarJo - المنصة المتكاملة</title>
+  <title>BazaarJo - عقارات</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -18,49 +17,25 @@ You said:
       text-align: center;
       font-size: 30px;
       font-weight: bold;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     }
-    nav {
+    .filters {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      align-items: center;
-      padding: 10px 20px;
+      padding: 15px 20px;
       background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #ddd;
     }
-    .tab-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    .tab-btn {
-      padding: 8px 14px;
-      border: none;
-      background: #eee;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-    .tab-btn.active {
-      background: #d81b60;
-      color: white;
-    }
-    select {
+    select, button {
       padding: 8px;
       font-size: 14px;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-    .filters {
-      display: none;
-      flex-wrap: wrap;
-      gap: 10px;
-      padding: 10px 20px;
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-    }
-    .filters.active {
-      display: flex;
+    button {
+      background: #d81b60;
+      color: white;
+      cursor: pointer;
     }
     #map {
       height: 500px;
@@ -71,28 +46,10 @@ You said:
   </style>
 </head>
 <body>
-  <header>BazaarJo - المنصة المتكاملة</header>
-  <nav>
-    <div class="tab-buttons">
-      <button class="tab-btn active" data-target="real-estate">عقارات</button>
-      <button class="tab-btn" data-target="cars">سيارات</button>
-      <button class="tab-btn" data-target="services">خدمات</button>
-      <button class="tab-btn" data-target="jobs">وظائف</button>
-      <button class="tab-btn" data-target="home">متعلقات منزلية</button>
-      <button class="tab-btn" data-target="electronics">أجهزة إلكترونية</button>
-      <button class="tab-btn" data-target="personal">مستلزمات شخصية</button>
-      <button class="tab-btn" data-target="clothes">ملابس وأحذية</button>
-      <button class="tab-btn" data-target="hobbies">هوايات وترفيه</button>
-    </div>
-    <select id="region"></select>
-    <select id="language">
-      <option value="ar">العربية</option>
-      <option value="en">English</option>
-    </select>
-  </nav>
+  <header>BazaarJo - عقارات</header>
 
-  <!-- قسم الفلاتر لعقارات -->
-  <div class="filters active" id="real-estate">
+  <!-- فلاتر قسم العقارات فقط -->
+  <div class="filters" id="real-estate">
     <select id="type-realestate">
       <option value="">نوع العقار</option>
       <option value="أراضي سكنية">أراضي سكنية</option>
@@ -124,69 +81,11 @@ You said:
     <button id="applyFilters">تطبيق الفلاتر</button>
   </div>
 
-  <!-- قسم الفلاتر للخدمات -->
-  <div class="filters" id="services">
-    <select id="service-type">
-      <option value="">نوع الخدمة</option>
-      <option value="كهربائي">كهربائي</option>
-      <option value="سباك">سباك</option>
-      <option value="نجار">نجار</option>
-      <option value="حداد">حداد</option>
-      <option value="تكييف وتبريد">تكييف وتبريد</option>
-      <option value="صيانة أجهزة منزلية">صيانة أجهزة منزلية</option>
-      <option value="دهان وتشطيب">دهان وتشطيب</option>
-      <option value="تنظيف منازل">تنظيف منازل</option>
-      <option value="نقل عفش">نقل عفش</option>
-      <option value="مكافحة حشرات">مكافحة حشرات</option>
-      <option value="غسيل سجاد وستائر">غسيل سجاد وستائر</option>
-      <option value="محاسبة">محاسبة</option>
-      <option value="استشارات قانونية">استشارات قانونية</option>
-      <option value="تصميم جرافيك">تصميم جرافيك</option>
-      <option value="تسويق إلكتروني">تسويق إلكتروني</option>
-      <option value="تطوير مواقع وتطبيقات">تطوير مواقع وتطبيقات</option>
-      <option value="ميكانيكي سيارات">ميكانيكي سيارات</option>
-      <option value="كهربائي سيارات">كهربائي سيارات</option>
-      <option value="غسيل سيارات متنقل">غسيل سيارات متنقل</option>
-      <option value="إكسسوارات سيارات">إكسسوارات سيارات</option>
-      <option value="دروس خصوصية">دروس خصوصية</option>
-      <option value="تدريب مهني">تدريب مهني</option>
-      <option value="تعليم لغات">تعليم لغات</option>
-      <option value="استشارات دراسية">استشارات دراسية</option>
-      <option value="مساج">مساج</option>
-      <option value="عناية بالبشرة">عناية بالبشرة</option>
-      <option value="كوافير">كوافير</option>
-      <option value="تركيب أظافر / رموش / شعر">تركيب أظافر / رموش / شعر</option>
-      <option value="تدريب كلاب">تدريب كلاب</option>
-      <option value="عناية بيطرية">عناية بيطرية</option>
-      <option value="استضافة حيوانات">استضافة حيوانات</option>
-    </select>
-    <button id="applyServiceFilters">تطبيق الفلاتر</button>
-  </div>
-
-  <!-- باقي الأقسام لا تحتوي على فلاتر حالياً -->
-  <div class="filters" id="cars">قسم سيارات (قيد التطوير)</div>
-  <div class="filters" id="jobs">قسم وظائف (قيد التطوير)</div>
-  <div class="filters" id="home">قسم متعلقات منزلية (قيد التطوير)</div>
-  <div class="filters" id="electronics">قسم أجهزة إلكترونية (قيد التطوير)</div>
-  <div class="filters" id="personal">قسم مستلزمات شخصية (قيد التطوير)</div>
-  <div class="filters" id="clothes">قسم ملابس وأحذية (قيد التطوير)</div>
-  <div class="filters" id="hobbies">قسم هوايات وترفيه (قيد التطوير)</div>
-
+  <!-- خريطة -->
   <div id="map"></div>
 
+  <!-- جافاسكربت -->
   <script>
-    const tabs = document.querySelectorAll('.tab-btn');
-    const sections = document.querySelectorAll('.filters');
-
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        tabs.forEach(t => t.classList.remove('active'));
-        tab.classList.add('active');
-        sections.forEach(s => s.classList.remove('active'));
-        document.getElementById(tab.dataset.target).classList.add('active');
-      });
-    });
-
     function initMap() {
       const center = { lat: 31.963158, lng: 35.930359 };
       const map = new google.maps.Map(document.getElementById("map"), {
@@ -212,45 +111,10 @@ You said:
         return marker;
       });
     });
-
-    document.getElementById("applyServiceFilters").addEventListener("click", () => {
-      const selected = document.getElementById("service-type").value;
-      alert("تم اختيار الخدمة: " + selected);
-    });
-
-    updateLanguage('ar'); // تأكيد تشغيل اللغة عند البدء
-
-    const translations = {
-      ar: {
-        header: "BazaarJo - المنصة المتكاملة",
-        tabs: ["عقارات", "سيارات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
-        regionLabel: "اختر المنطقة",
-        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"]
-      },
-      en: {
-        header: "BazaarJo - Integrated Platform",
-        tabs: ["Real Estate", "Cars", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
-        regionLabel: "Select Region",
-        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"]
-      }
-    };
-
-    function updateLanguage(lang) {
-      const t = translations[lang];
-      document.querySelector('header').textContent = t.header;
-      document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.textContent = t.tabs[i]);
-      const regionSelect = document.getElementById('region');
-      regionSelect.innerHTML = <option value="">${t.regionLabel}</option> +
-        t.regions.map(r => <option value="${r}">${r}</option>).join("");
-    }
-
-    document.getElementById('language').addEventListener('change', (e) => {
-      const lang = e.target.value;
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-      updateLanguage(lang);
-    });
   </script>
 
   <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap"> اريده فقد مع الابواب والفلتر الخاص بالاراضي فقط
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
+</body>
+</html>
