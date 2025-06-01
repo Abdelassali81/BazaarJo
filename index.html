@@ -22,6 +22,7 @@
     nav {
       display: flex;
       flex-wrap: wrap;
+      gap: 10px;
       align-items: center;
       padding: 10px 20px;
       background: #fff;
@@ -29,9 +30,9 @@
     }
     .tab-buttons {
       display: flex;
+      flex-wrap: wrap;
       gap: 10px;
       flex-grow: 1;
-      flex-wrap: wrap;
     }
     .tab-btn {
       padding: 8px 14px;
@@ -44,9 +45,6 @@
     .tab-btn.active {
       background: #d81b60;
       color: white;
-    }
-    #region {
-      margin-right: 10px;
     }
     select {
       padding: 8px;
@@ -78,7 +76,7 @@
   <nav>
     <div class="tab-buttons">
       <button class="tab-btn active" data-target="real-estate">عقارات</button>
-      <button class="tab-btn" data-target="vehicles">سيارات</button>
+      <button class="tab-btn" data-target="vehicles">مركبات</button>
       <button class="tab-btn" data-target="services">خدمات</button>
       <button class="tab-btn" data-target="jobs">وظائف</button>
       <button class="tab-btn" data-target="home">متعلقات منزلية</button>
@@ -94,63 +92,18 @@
     </select>
   </nav>
 
-  <div class="filters active" id="real-estate">
-    <select id="type-realestate">
-      <option value="">نوع العقار</option>
-      <option value="أراضي سكنية">أراضي سكنية</option>
-      <option value="أراضي تجارية">أراضي تجارية</option>
-      <option value="أراضي زراعية">أراضي زراعية</option>
-      <option value="شقق">شقق</option>
-      <option value="فلل">فلل</option>
-      <option value="مزارع">مزارع</option>
-    </select>
-    <select id="price-realestate">
-      <option value="">السعر</option>
-      <option value="lt50">أقل من 50 ألف</option>
-      <option value="50-100">من 50 إلى 100 ألف</option>
-      <option value="gt100">أكثر من 100 ألف</option>
-    </select>
-    <select id="area">
-      <option value="">المساحة</option>
-      <option value="lt100">أقل من 100م²</option>
-      <option value="100-200">من 100 إلى 200م²</option>
-      <option value="gt200">أكثر من 200م²</option>
-    </select>
-    <select id="rooms">
-      <option value="">عدد الغرف</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4+</option>
-    </select>
-    <button id="applyFilters">تطبيق الفلاتر</button>
-  </div>
-
+  <div class="filters active" id="real-estate">العقارات</div>
   <div class="filters" id="vehicles">
-    <select id="vehicle-type">
-      <option value="">اختر نوع المركبة</option>
-      <option value="سيارات">سيارات</option>
-      <option value="قطع غيار السيارات وملحقاتها">قطع غيار السيارات وملحقاتها</option>
-      <!-- ... باقي الخيارات ... -->
-    </select>
+    <select id="vehicle-type"></select>
     <button id="applyVehicleFilters">تطبيق الفلاتر</button>
   </div>
-
-  <div class="filters" id="services">
-    <select id="service-type">
-      <option value="">نوع الخدمة</option>
-      <option value="كهربائي">كهربائي</option>
-      <!-- ... باقي الخيارات ... -->
-    </select>
-    <button id="applyServiceFilters">تطبيق الفلاتر</button>
-  </div>
-
-  <div class="filters" id="jobs">قسم وظائف</div>
-  <div class="filters" id="home">قسم متعلقات منزلية</div>
-  <div class="filters" id="electronics">قسم أجهزة إلكترونية</div>
-  <div class="filters" id="personal">قسم مستلزمات شخصية</div>
-  <div class="filters" id="clothes">قسم ملابس وأحذية</div>
-  <div class="filters" id="hobbies">قسم هوايات وترفيه</div>
+  <div class="filters" id="services">الخدمات</div>
+  <div class="filters" id="jobs">الوظائف</div>
+  <div class="filters" id="home">المتعلقات المنزلية</div>
+  <div class="filters" id="electronics">الإلكترونيات</div>
+  <div class="filters" id="personal">مستلزمات شخصية</div>
+  <div class="filters" id="clothes">ملابس</div>
+  <div class="filters" id="hobbies">هوايات</div>
 
   <div id="map"></div>
 
@@ -171,44 +124,44 @@
       });
     });
 
-    function initMap() {
-      const center = { lat: 31.963158, lng: 35.930359 };
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: center,
-      });
-      window.map = map;
-      window.markers = [];
-    }
-
-    document.getElementById("applyFilters").addEventListener("click", () => {
-      const listings = [
-        { lat: 31.95, lng: 35.91, title: "شقة في عمان - 100م²" },
-        { lat: 32.0, lng: 36.0, title: "أرض زراعية في الزرقاء" }
-      ];
-      window.markers.forEach(m => m.setMap(null));
-      window.markers = listings.map(loc => {
-        const marker = new google.maps.Marker({
-          position: { lat: loc.lat, lng: loc.lng },
-          map: window.map,
-          title: loc.title
-        });
-        return marker;
-      });
-    });
-
     const translations = {
       ar: {
         header: "BazaarJo - المنصة المتكاملة",
-        tabs: ["عقارات", "سيارات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
+        tabs: ["عقارات", "مركبات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
         regionLabel: "اختر المنطقة",
-        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"]
+        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"],
+        vehiclePlaceholder: "اختر نوع المركبة",
+        vehicles: [
+          "سيارات",
+          "قطع غيار السيارات وملحقاتها",
+          "قوارب",
+          "قطع غيار القوارب وملحقاتها",
+          "كرفانات وبيوت متنقلة",
+          "دراجات نارية وجرارات",
+          "دراجات نارية",
+          "قطع غيار الدراجات النارية وملحقاتها",
+          "شاحنات، رافعات شوكية، ومعدات بناء",
+          "آلات زراعية وحراجية"
+        ]
       },
       en: {
         header: "BazaarJo - Integrated Platform",
-        tabs: ["Real Estate", "Cars", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
+        tabs: ["Real Estate", "Vehicles", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
         regionLabel: "Select Region",
-        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"]
+        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"],
+        vehiclePlaceholder: "Select Vehicle Type",
+        vehicles: [
+          "Cars",
+          "Car Parts & Accessories",
+          "Boats",
+          "Boat Parts & Accessories",
+          "Caravans & Mobile Homes",
+          "Motorcycles & Tractors",
+          "Motorcycles",
+          "Motorcycle Parts & Accessories",
+          "Trucks, Forklifts & Construction Equipment",
+          "Agricultural & Forestry Machinery"
+        ]
       }
     };
 
@@ -219,6 +172,10 @@
       const regionSelect = document.getElementById('region');
       regionSelect.innerHTML = `<option value="">${t.regionLabel}</option>` +
         t.regions.map(r => `<option value="${r}">${r}</option>`).join("");
+
+      const vehicleSelect = document.getElementById("vehicle-type");
+      vehicleSelect.innerHTML = `<option value="">${t.vehiclePlaceholder}</option>` +
+        t.vehicles.map(v => `<option value="${v}">${v}</option>`).join("");
     }
 
     document.getElementById('language').addEventListener('change', (e) => {
@@ -228,9 +185,13 @@
       updateLanguage(lang);
     });
 
+    document.getElementById("applyVehicleFilters").addEventListener("click", () => {
+      const selected = document.getElementById("vehicle-type").value;
+      alert("تم اختيار المركبة: " + selected);
+    });
+
     updateLanguage('ar');
   </script>
-
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
