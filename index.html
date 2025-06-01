@@ -144,9 +144,57 @@
   </div>
 
   <div class="filters" id="services">
-    <select><option>نوع الخدمة</option></select>
-    <button>تطبيق الفلاتر</button>
-  </div>
+  <select id="main-service" onchange="showSubServices()">
+    <option value="">اختر نوع الخدمة</option>
+    <option value="home">خدمات منزلية</option>
+    <option value="personal">خدمات شخصية</option>
+    <option value="tech">خدمات تقنية</option>
+    <option value="consulting">خدمات استشارية</option>
+    <option value="delivery">خدمات توصيل ونقل</option>
+    <option value="entertainment">خدمات ترفيه وتنظيم مناسبات</option>
+    <option value="education">خدمات تعليمية وتدريبية</option>
+  </select>
+
+  <select id="sub-service" style="display:none;">
+    <option value="">اختر الخدمة الفرعية</option>
+  </select>
+
+  <button>تطبيق الفلاتر</button>
+</div>
+
+<script>
+  const subServices = {
+    "home": ["تنظيف وصيانة المنازل", "إصلاحات كهربائية وسباكة", "دهان وترميم", "خدمات التكييف والتبريد"],
+    "personal": ["حلاقة وتجميل", "مدرب شخصي / لياقة بدنية", "جلسات تدليك وعلاج طبيعي", "تعليم خصوصي"],
+    "tech": ["تصميم مواقع وتطبيقات", "صيانة أجهزة الكمبيوتر والهواتف", "دعم فني وخدمات IT", "تسويق إلكتروني"],
+    "consulting": ["استشارات قانونية", "استشارات مالية وضريبية", "استشارات هندسية وعقارية"],
+    "delivery": ["خدمات توصيل الطرود والطلبات", "نقل أثاث ومعدات", "استئجار سيارات وشاحنات"],
+    "entertainment": ["تنظيم حفلات وأعياد ميلاد", "تصوير فوتوغرافي وفيديو", "خدمات موسيقية وفنية"],
+    "education": ["كورسات وورش عمل", "تعليم لغات", "دورات تدريب مهني"]
+  };
+
+  function showSubServices() {
+    const mainSelect = document.getElementById('main-service');
+    const subSelect = document.getElementById('sub-service');
+    const selected = mainSelect.value;
+
+    if (!selected) {
+      subSelect.style.display = 'none';
+      subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+      return;
+    }
+
+    subSelect.style.display = 'inline-block';
+    subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+
+    subServices[selected].forEach(service => {
+      const option = document.createElement('option');
+      option.value = service;
+      option.textContent = service;
+      subSelect.appendChild(option);
+    });
+  }
+</script>
 
   <div class="filters" id="home-items">
     <select><option>النوع</option></select>
