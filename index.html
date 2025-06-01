@@ -185,7 +185,13 @@
   <option value="15">15 سنة</option>
   <option value="20">20 سنة</option>
 </select>
-    <select><option>السعر</option></select>
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+  <label for="priceFrom">السعر من:</label>
+  <input type="number" id="priceFrom" name="priceFrom" placeholder="مثال: 5000" style="width: 100px;" />
+
+  <label for="priceTo">إلى:</label>
+  <input type="number" id="priceTo" name="priceTo" placeholder="مثال: 15000" style="width: 100px;" />
+</div>
     <button>تطبيق الفلاتر</button>
   </div>
 
