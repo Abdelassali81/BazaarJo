@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>BazaarJo - عقارات</title>
+  <title>BazaarJo - أقسام متعددة</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -20,12 +20,13 @@
     }
     .tabs {
       display: flex;
+      flex-wrap: wrap;
       justify-content: center;
       background: #fff;
       border-bottom: 1px solid #ddd;
     }
     .tabs button {
-      flex: 1;
+      flex: 1 1 120px;
       padding: 15px;
       font-size: 16px;
       background: none;
@@ -69,79 +70,59 @@
   </style>
 </head>
 <body>
-  <header>BazaarJo - عقارات</header>
+  <header>BazaarJo - أقسام متعددة</header>
 
   <!-- تبويبات الأقسام -->
   <div class="tabs">
     <button onclick="showSection('real-estate')">عقارات</button>
     <button onclick="showSection('vehicles')">مركبات</button>
+    <button onclick="showSection('services')">خدمات</button>
+    <button onclick="showSection('home-items')">متعلقات منزلية</button>
+    <button onclick="showSection('personal-items')">مستلزمات شخصية</button>
+    <button onclick="showSection('fashion')">ملابس وأحذية</button>
+    <button onclick="showSection('hobbies')">هوايات وترفيه</button>
   </div>
 
-  <!-- فلاتر قسم العقارات -->
+  <!-- فلاتر الأقسام -->
   <div class="filters" id="real-estate">
-    <select id="type-realestate">
-      <option value="">نوع العقار</option>
-      <option value="أراضي سكنية">أراضي سكنية</option>
-      <option value="أراضي تجارية">أراضي تجارية</option>
-      <option value="أراضي زراعية">أراضي زراعية</option>
-      <option value="شقق">شقق</option>
-      <option value="فلل">فلل</option>
-      <option value="مزارع">مزارع</option>
-    </select>
-    <select id="price-realestate">
-      <option value="">السعر</option>
-      <option value="lt50">أقل من 50 ألف</option>
-      <option value="50-100">من 50 إلى 100 ألف</option>
-      <option value="gt100">أكثر من 100 ألف</option>
-    </select>
-    <select id="area">
-      <option value="">المساحة</option>
-      <option value="lt100">أقل من 100م²</option>
-      <option value="100-200">من 100 إلى 200م²</option>
-      <option value="gt200">أكثر من 200م²</option>
-    </select>
-    <select id="rooms">
-      <option value="">عدد الغرف</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4+</option>
-    </select>
-    <button id="applyFilters">تطبيق الفلاتر</button>
+    <select><option>نوع العقار</option></select>
+    <select><option>السعر</option></select>
+    <select><option>المساحة</option></select>
+    <select><option>عدد الغرف</option></select>
+    <button>تطبيق الفلاتر</button>
   </div>
 
-  <!-- فلاتر قسم المركبات -->
   <div class="filters" id="vehicles">
-    <select id="vehicle-type">
-      <option value="">نوع المركبة</option>
-      <option value="سيارة">سيارة</option>
-      <option value="دراجة نارية">دراجة نارية</option>
-      <option value="شاحنة">شاحنة</option>
-      <option value="باص">باص</option>
-    </select>
-    <select id="brand">
-      <option value="">الماركة</option>
-      <option value="تويوتا">تويوتا</option>
-      <option value="هيونداي">هيونداي</option>
-      <option value="كيا">كيا</option>
-      <option value="نيسان">نيسان</option>
-      <option value="فورد">فورد</option>
-    </select>
-    <select id="year">
-      <option value="">سنة الصنع</option>
-      <option value="2025">2025</option>
-      <option value="2024">2024</option>
-      <option value="2023">2023</option>
-      <option value="2020-2022">2020 - 2022</option>
-      <option value="lt2020">قبل 2020</option>
-    </select>
-    <select id="price-vehicle">
-      <option value="">السعر</option>
-      <option value="lt5000">أقل من 5000</option>
-      <option value="5000-10000">من 5000 إلى 10000</option>
-      <option value="gt10000">أكثر من 10000</option>
-    </select>
-    <button id="applyVehicleFilters">تطبيق الفلاتر</button>
+    <select><option>نوع المركبة</option></select>
+    <select><option>الماركة</option></select>
+    <select><option>سنة الصنع</option></select>
+    <select><option>السعر</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="services">
+    <select><option>نوع الخدمة</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="home-items">
+    <select><option>النوع</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="personal-items">
+    <select><option>النوع</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="fashion">
+    <select><option>الفئة</option></select>
+    <button>تطبيق الفلاتر</button>
+  </div>
+
+  <div class="filters" id="hobbies">
+    <select><option>النوع</option></select>
+    <button>تطبيق الفلاتر</button>
   </div>
 
   <!-- خريطة -->
@@ -159,34 +140,30 @@
       window.markers = [];
     }
 
-    document.getElementById("applyFilters").addEventListener("click", () => {
-      const listings = [
-        { lat: 31.95, lng: 35.91, title: "شقة في عمان - 100م²" },
-        { lat: 32.0, lng: 36.0, title: "أرض زراعية في الزرقاء" }
-      ];
-      window.markers.forEach(m => m.setMap(null));
-      window.markers = listings.map(loc => {
-        const marker = new google.maps.Marker({
-          position: { lat: loc.lat, lng: loc.lng },
-          map: window.map,
-          title: loc.title
-        });
-        return marker;
-      });
-    });
-
     function showSection(sectionId) {
       document.querySelectorAll('.filters').forEach(el => el.classList.remove('active'));
       document.getElementById(sectionId).classList.add('active');
 
       document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
       const tabButton = [...document.querySelectorAll('.tabs button')].find(btn =>
-        btn.textContent.includes(sectionId === 'real-estate' ? 'عقارات' : 'مركبات')
+        btn.textContent.includes(getSectionName(sectionId))
       );
       if (tabButton) tabButton.classList.add('active');
     }
 
-    // أظهر قسم العقارات افتراضيًا
+    function getSectionName(id) {
+      const map = {
+        'real-estate': 'عقارات',
+        'vehicles': 'مركبات',
+        'services': 'خدمات',
+        'home-items': 'متعلقات منزلية',
+        'personal-items': 'مستلزمات شخصية',
+        'fashion': 'ملابس',
+        'hobbies': 'هوايات'
+      };
+      return map[id] || '';
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       showSection('real-estate');
     });
