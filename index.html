@@ -2,98 +2,140 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8" />
-  <title>BazaarJo - أقسام متعددة</title>
+  <title>BazaarJo - منصة السوق الإلكتروني</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f5f5f5;
+      margin: 0; padding: 0;
+      background: #f9f9f9;
+      direction: rtl;
+      text-align: right;
     }
     header {
       background: linear-gradient(90deg, #d81b60, #8e24aa);
       color: white;
-      padding: 20px;
+      padding: 20px 10px;
       text-align: center;
-      font-size: 30px;
-      font-weight: bold;
+      font-size: 28px;
+      font-weight: 700;
+      user-select: none;
     }
     .tabs {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      background: #fff;
+      background: white;
       border-bottom: 1px solid #ddd;
+      justify-content: center;
     }
     .tabs button {
-      flex: 1 1 120px;
-      padding: 15px;
-      font-size: 16px;
-      background: none;
+      flex: 1 1 130px;
       border: none;
+      background: none;
       cursor: pointer;
-      font-weight: bold;
+      padding: 12px 8px;
+      font-weight: 600;
+      font-size: 16px;
       color: #444;
+      transition: background-color 0.3s;
     }
-    .tabs button:hover,
-    .tabs button.active {
+    .tabs button.active,
+    .tabs button:hover {
       background: #eee;
     }
     .filters {
       display: none;
-      flex-wrap: wrap;
-      gap: 10px;
+      background: white;
       padding: 15px 20px;
-      background: #fff;
       border-bottom: 1px solid #ddd;
+      gap: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      display: flex;
     }
     .filters.active {
       display: flex;
     }
-    select, button {
-      padding: 8px;
+    select, button.apply-filter {
+      min-width: 160px;
+      padding: 7px 10px;
       font-size: 14px;
-      border: 1px solid #ccc;
       border-radius: 5px;
-    }
-    button {
-      background: #d81b60;
-      color: white;
+      border: 1px solid #ccc;
+      outline: none;
       cursor: pointer;
+      user-select: none;
+      background: white;
+      color: #333;
+    }
+    button.apply-filter {
+      background-color: #d81b60;
+      color: white;
+      border: none;
+      min-width: 100px;
+      font-weight: 700;
+      transition: background-color 0.3s;
+    }
+    button.apply-filter:hover {
+      background-color: #b21854;
     }
     #map {
-      height: 500px;
-      margin: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      height: 450px;
+      margin: 25px 15px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-  <header>BazaarJo - أقسام متعددة</header>
+  <header>BazaarJo - منصة السوق الإلكتروني</header>
 
-  <!-- تبويبات الأقسام -->
-  <div class="tabs">
-    <button onclick="showSection('real-estate')">عقارات</button>
-    <button onclick="showSection('vehicles')">مركبات</button>
-    <button onclick="showSection('services')">خدمات</button>
-    <button onclick="showSection('home-items')">متعلقات منزلية</button>
-    <button onclick="showSection('personal-items')">مستلزمات شخصية</button>
-    <button onclick="showSection('fashion')">ملابس وأحذية</button>
-    <button onclick="showSection('hobbies')">هوايات وترفيه</button>
-  </div>
+  <nav class="tabs" role="tablist" aria-label="أقسام السوق">
+    <button role="tab" aria-selected="true" aria-controls="real-estate" id="tab-real-estate" class="active" onclick="showSection('real-estate')">عقارات</button>
+    <button role="tab" aria-selected="false" aria-controls="vehicles" id="tab-vehicles" onclick="showSection('vehicles')">مركبات</button>
+    <button role="tab" aria-selected="false" aria-controls="services" id="tab-services" onclick="showSection('services')">خدمات</button>
+    <button role="tab" aria-selected="false" aria-controls="home-items" id="tab-home-items" onclick="showSection('home-items')">متعلقات منزلية</button>
+    <button role="tab" aria-selected="false" aria-controls="personal-items" id="tab-personal-items" onclick="showSection('personal-items')">مستلزمات شخصية</button>
+    <button role="tab" aria-selected="false" aria-controls="fashion" id="tab-fashion" onclick="showSection('fashion')">ملابس وأحذية</button>
+    <button role="tab" aria-selected="false" aria-controls="hobbies" id="tab-hobbies" onclick="showSection('hobbies')">هوايات وترفيه</button>
+  </nav>
 
-  <!-- فلاتر الأقسام -->
-  <div class="filters" id="real-estate">
-    <select><option>نوع العقار</option></select>
-    <select><option>السعر</option></select>
-    <select><option>المساحة</option></select>
-    <select><option>عدد الغرف</option></select>
-    <button>تطبيق الفلاتر</button>
-  </div>
+  <!-- عقارات -->
+  <section id="real-estate" class="filters active" role="tabpanel" aria-labelledby="tab-real-estate">
+    <select aria-label="نوع العقار">
+      <option value="">نوع العقار</option>
+      <option>شقة</option>
+      <option>فيلا</option>
+      <option>أرض</option>
+      <option>محل تجاري</option>
+    </select>
+    <select aria-label="السعر">
+      <option value="">السعر</option>
+      <option>أقل من 50,000</option>
+      <option>50,000 - 100,000</option>
+      <option>100,000 - 200,000</option>
+      <option>أكثر من 200,000</option>
+    </select>
+    <select aria-label="المساحة">
+      <option value="">المساحة</option>
+      <option>أقل من 50 م²</option>
+      <option>50 - 100 م²</option>
+      <option>100 - 200 م²</option>
+      <option>أكثر من 200 م²</option>
+    </select>
+    <select aria-label="عدد الغرف">
+      <option value="">عدد الغرف</option>
+      <option>1</option>
+      <option>2</option>
+      <option>3</option>
+      <option>4+</option>
+    </select>
+    <button class="apply-filter" onclick="applyFilters('real-estate')">تطبيق الفلاتر</button>
+  </section>
 
-  <div class="filters" id="vehicles">
-    <select id="vehicle-type">
+  <!-- مركبات -->
+  <section id="vehicles" class="filters" role="tabpanel" aria-labelledby="tab-vehicles">
+    <select id="vehicle-type" aria-label="نوع المركبة" onchange="resetModel()">
       <option value="">نوع المركبة</option>
       <option value="سيارة">سيارة</option>
       <option value="سيدان">سيدان</option>
@@ -109,7 +151,7 @@
       <option value="باص">باص</option>
     </select>
 
-    <select id="brand">
+    <select id="brand" aria-label="الماركة" onchange="updateModels()">
       <option value="">الماركة</option>
       <option value="تويوتا">تويوتا</option>
       <option value="هيونداي">هيونداي</option>
@@ -134,17 +176,34 @@
       <option value="other">غير ذلك</option>
     </select>
 
-    <select id="model" disabled>
+    <select id="model" aria-label="الموديل / الفئة" disabled>
       <option value="">الموديل / الفئة</option>
     </select>
 
-    <select><option>سنة الصنع</option></select>
-    <select><option>السعر</option></select>
-    <button>تطبيق الفلاتر</button>
-  </div>
+    <select aria-label="سنة الصنع">
+      <option value="">سنة الصنع</option>
+      <option>2025</option>
+      <option>2024</option>
+      <option>2023</option>
+      <option>2022</option>
+      <option>2021</option>
+      <option>2020 أو أقدم</option>
+    </select>
 
-  <div class="filters" id="services">
-    <select id="main-service" onchange="showSubServices()">
+    <select aria-label="السعر">
+      <option value="">السعر</option>
+      <option>أقل من 20,000</option>
+      <option>20,000 - 50,000</option>
+      <option>50,000 - 100,000</option>
+      <option>أكثر من 100,000</option>
+    </select>
+
+    <button class="apply-filter" onclick="applyFilters('vehicles')">تطبيق الفلاتر</button>
+  </section>
+
+  <!-- خدمات -->
+  <section id="services" class="filters" role="tabpanel" aria-labelledby="tab-services">
+    <select id="main-service" aria-label="نوع الخدمة" onchange="showSubServices()">
       <option value="">اختر نوع الخدمة</option>
       <option value="home">خدمات منزلية</option>
       <option value="personal">خدمات شخصية</option>
@@ -155,209 +214,164 @@
       <option value="education">خدمات تعليمية وتدريبية</option>
     </select>
 
-    <select id="sub-service" style="display:none;">
+    <select id="sub-service" aria-label="الخدمة الفرعية" style="display:none;">
       <option value="">اختر الخدمة الفرعية</option>
     </select>
 
-    <button>تطبيق الفلاتر</button>
-  </div>
+    <button class="apply-filter" onclick="applyFilters('services')">تطبيق الفلاتر</button>
+  </section>
 
-  <div class="filters" id="home-items">
-    <select>
+  <!-- متعلقات منزلية -->
+  <section id="home-items" class="filters" role="tabpanel" aria-labelledby="tab-home-items">
+    <select aria-label="نوع المتعلق">
       <option value="">اختر نوع المتعلق</option>
-      <option value="أثاث">أثاث</option>
-      <option value="ديكور">ديكور</option>
-      <option value="أدوات مطبخ">أدوات مطبخ</option>
-      <option value="مستلزمات تنظيف">مستلزمات تنظيف</option>
-      <option value="أدوات حدائق">أدوات حدائق</option>
-      <option value="مستلزمات أطفال">مستلزمات أطفال</option>
-      <option value="مستلزمات تخزين">مستلزمات تخزين</option>
-      <option value="أدوات صيانة">أدوات صيانة</option>
-      <option value="غير ذلك">غير ذلك</option>
+      <option>أثاث</option>
+      <option>ديكور</option>
+      <option>أدوات مطبخ</option>
+      <option>مستلزمات تنظيف</option>
+      <option>أدوات حدائق</option>
+      <option>مستلزمات أطفال</option>
+      <option>مستلزمات تخزين</option>
+      <option>أدوات صيانة</option>
+      <option>غير ذلك</option>
     </select>
-    <button>تطبيق الفلاتر</button>
-  </div>
+    <button class="apply-filter" onclick="applyFilters('home-items')">تطبيق الفلاتر</button>
+  </section>
 
-  <div class="filters" id="personal-items">
-    <select id="personal-items-select">
-      <option value="">نوع المستلزمات الشخصية</option>
-      <option value="مستحضرات تجميل">مستحضرات تجميل</option>
-      <option value="عطور">عطور</option>
-      <option value="منتجات العناية بالبشرة">منتجات العناية بالبشرة</option>
-      <option value="أدوات الحلاقة">أدوات الحلاقة</option>
-      <option value="نظارات شمسية ونظارات طبية">نظارات شمسية ونظارات طبية</option>
-      <option value="ساعات وأكسسوارات">ساعات وأكسسوارات</option>
-      <option value="حقائب ومحافظ">حقائب ومحافظ</option>
-      <option value="مجوهرات">مجوهرات</option>
-      <option value="مستلزمات الشعر">مستلزمات الشعر</option>
-      <option value="أدوات العناية بالأظافر">أدوات العناية بالأظافر</option>
-      <option value="ملابس داخلية">ملابس داخلية</option>
-      <option value="غير ذلك">غير ذلك</option>
+  <!-- مستلزمات شخصية -->
+  <section id="personal-items" class="filters" role="tabpanel" aria-labelledby="tab-personal-items">
+    <select aria-label="نوع المستلزمات">
+      <option value="">اختر نوع المستلزمات</option>
+      <option>مستحضرات تجميل</option>
+      <option>إكسسوارات</option>
+      <option>منتجات عناية شخصية</option>
+      <option>أدوات رياضية</option>
+      <option>غير ذلك</option>
     </select>
-    <button>تطبيق الفلاتر</button>
-  </div>
-<div class="filters" id="fashion">
-  <select id="fashion-category">
-    <option value="">اختر الفئة</option>
-    <option value="رجالي">رجالي</option>
-    <option value="نسائي">نسائي</option>
-    <option value="أطفال">أطفال</option>
-    <option value="أحذية">أحذية</option>
-    <option value="حقائب وأكسسوارات">حقائب وأكسسوارات</option>
-    <option value="ملابس رياضية">ملابس رياضية</option>
-    <option value="ملابس رسمية">ملابس رسمية</option>
-    <option value="ملابس داخلية">ملابس داخلية</option>
-    <option value="أزياء تقليدية">أزياء تقليدية</option>
-    <option value="غير ذلك">غير ذلك</option>
-  </select>
+    <button class="apply-filter" onclick="applyFilters('personal-items')">تطبيق الفلاتر</button>
+  </section>
 
-  <select id="fashion-condition">
-    <option value="">حالة المنتج</option>
-    <option value="جديد">جديد</option>
-    <option value="مستعمل بحالة ممتازة">مستعمل بحالة ممتازة</option>
-    <option value="مستعمل بحالة جيدة">مستعمل بحالة جيدة</option>
-    <option value="بحاجة إلى بعض التصليح">بحاجة إلى بعض التصليح</option>
-  </select>
-
-  <button>تطبيق الفلاتر</button>
-</div>
-  <div class="filters" id="hobbies">
-    <select>
-      <option value="">اختر الفئة</option>
-      <option value="كتب ومجلات">كتب ومجلات</option>
-      <option value="أدوات موسيقية">أدوات موسيقية</option>
-      <option value="ألعاب فيديو">ألعاب فيديو وأجهزة ألعاب</option>
-      <option value="معدات رياضية">معدات رياضية</option>
-      <option value="معدات تخييم">معدات تخييم ورحلات</option>
-      <option value="أدوات فنون">أدوات رسم وفنون</option>
-      <option value="أدوات صيد">أدوات صيد</option>
-      <option value="ألعاب أطفال">ألعاب وهوايات أطفال</option>
-      <option value="أدوات DIY">أدوات صنع يدوي / DIY</option>
-      <option value="غير ذلك">غير ذلك</option>
+  <!-- ملابس وأحذية -->
+  <section id="fashion" class="filters" role="tabpanel" aria-labelledby="tab-fashion">
+    <select aria-label="نوع الملابس">
+      <option value="">نوع الملابس</option>
+      <option>رجالي</option>
+      <option>نسائي</option>
+      <option>أطفال</option>
     </select>
-    <button>تطبيق الفلاتر</button>
-  </div>
+    <select aria-label="نوع القطعة">
+      <option value="">نوع القطعة</option>
+      <option>قمصان</option>
+      <option>بنطلونات</option>
+      <option>فساتين</option>
+      <option>أحذية</option>
+      <option>إكسسوارات</option>
+    </select>
+    <select aria-label="المقاس">
+      <option value="">المقاس</option>
+      <option>XS</option>
+      <option>S</option>
+      <option>M</option>
+      <option>L</option>
+      <option>XL</option>
+      <option>XXL</option>
+    </select>
+    <button class="apply-filter" onclick="applyFilters('fashion')">تطبيق الفلاتر</button>
+  </section>
 
-  <!-- خريطة -->
+  <!-- هوايات وترفيه -->
+  <section id="hobbies" class="filters" role="tabpanel" aria-labelledby="tab-hobbies">
+    <select aria-label="نوع الهواية">
+      <option value="">نوع الهواية</option>
+      <option>ألعاب فيديو</option>
+      <option>أدوات موسيقية</option>
+      <option>كتب</option>
+      <option>ألعاب رياضية</option>
+      <option>غير ذلك</option>
+    </select>
+    <button class="apply-filter" onclick="applyFilters('hobbies')">تطبيق الفلاتر</button>
+  </section>
+
+  <!-- خريطة جوجل -->
   <div id="map"></div>
 
-  <!-- سكريبتات -->
   <script>
-    const subServices = {
-      "home": ["تنظيف وصيانة المنازل", "إصلاحات كهربائية وسباكة", "دهان وترميم", "خدمات التكييف والتبريد"],
-      "personal": ["حلاقة وتجميل", "مدرب شخصي / لياقة بدنية", "جلسات تدليك وعلاج طبيعي", "تعليم خصوصي"],
-      "tech": ["تصميم مواقع وتطبيقات", "صيانة أجهزة الكمبيوتر والهواتف", "دعم فني وخدمات IT", "تسويق إلكتروني"],
-      "consulting": ["استشارات قانونية", "استشارات مالية وضريبية", "استشارات هندسية وعقارية"],
-      "delivery": ["خدمات توصيل الطرود والطلبات", "نقل أثاث ومعدات", "استئجار سيارات وشاحنات"],
-      "entertainment": ["تنظيم حفلات وأعياد ميلاد", "تصوير فوتوغرافي وفيديو", "خدمات موسيقية وفنية"],
-      "education": ["كورسات وورش عمل", "تعليم لغات", "دورات تدريب مهني"]
+    // التبويبات - عرض القسم المحدد وتحديث الصفات
+    function showSection(sectionId) {
+      const tabs = document.querySelectorAll('.tabs button');
+      const sections = document.querySelectorAll('.filters');
+
+      tabs.forEach(tab => {
+        const selected = tab.getAttribute('aria-controls') === sectionId;
+        tab.classList.toggle('active', selected);
+        tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      });
+
+      sections.forEach(sec => {
+        sec.classList.toggle('active', sec.id === sectionId);
+      });
+    }
+
+    // موديلات السيارات حسب الماركة
+    const carModels = {
+      "تويوتا": ["كورولا", "كامري", "راف فور", "هايلاندر"],
+      "هيونداي": ["النترا", "سوناتا", "توسان", "كريتا"],
+      "كيا": ["سبورتاج", "سيراتو", "ريو"],
+      "نيسان": ["ألتيما", "صني", "باترول"],
+      "فورد": ["إكسبلورر", "فوكاس", "F-150"],
+      "مرسيدس": ["C-Class", "E-Class", "GLA"],
+      "بي إم دبليو": ["سلسلة 3", "سلسلة 5", "X5"],
+      "أودي": ["A4", "Q5", "A6"],
+      "شيفروليه": ["كروز", "ماليبو", "سلفرادو"],
+      "لكزس": ["RX", "ES", "NX"],
+      "مازدا": ["3", "CX-5", "6"],
+      "ميتسوبيشي": ["أوتلندر", "لانسر"],
+      "سوبارو": ["فوريستر", "إمبريزا"],
+      "فولكسفاجن": ["جولف", "باسات", "Tiguan"],
+      "رينو": ["كليو", "ميجان"],
+      "جيب": ["رانجلر", "جراند شيروكي"],
+      "دايهاتسو": ["تيريوس", "ميرا"],
+      "سيتروين": ["C3", "C4"],
+      "إيسوزو": ["دي-ماكس"],
+      "سكودا": ["أوكتافيا", "فابيا"],
+      "other": ["موديل 1", "موديل 2"]
     };
 
-    function showSubServices() {
-      const mainSelect = document.getElementById('main-service');
-      const subSelect = document.getElementById('sub-service');
-      const selected = mainSelect.value;
+    function updateModels() {
+      const brandSelect = document.getElementById('brand');
+      const modelSelect = document.getElementById('model');
+      const brand = brandSelect.value;
 
-      if (!selected) {
-        subSelect.style.display = 'none';
-        subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
+      modelSelect.innerHTML = '<option value="">الموديل / الفئة</option>';
+
+      if (!brand || !carModels[brand]) {
+        modelSelect.disabled = true;
         return;
       }
 
-      subSelect.style.display = 'inline-block';
-      subSelect.innerHTML = '<option value="">اختر الخدمة الفرعية</option>';
-
-      subServices[selected].forEach(service => {
+      carModels[brand].forEach(model => {
         const option = document.createElement('option');
-        option.value = service;
-        option.textContent = service;
-        subSelect.appendChild(option);
+        option.value = model;
+        option.textContent = model;
+        modelSelect.appendChild(option);
       });
+      modelSelect.disabled = false;
     }
 
-    const vehicleModels = {
-      "تويوتا": ["كورولا", "كامري", "لاندكروزر", "برادو", "راف فور", "هايكس", "فورتشنر"],
-      "هيونداي": ["النترا", "سوناتا", "توسان", "سانتا في", "كريتا", "أزيرا"],
-      "كيا": ["سيراتو", "سبورتاج", "ماديرا", "أوبتيما", "ريو", "كادينزا"],
-      "نيسان": ["تيما", "باترول", "ألتيما", "سنترا", "قشقاي", "أرمادا"],
-      "فورد": ["F-150", "موستنج", "إكسبلورر", "إيدج", "رينجر"],
-      "مرسيدس": ["C-Class", "E-Class", "S-Class", "GLE", "GLC", "A-Class", "CLA", "G-Class"],
-      "بي إم دبليو": ["سلسلة 3", "سلسلة 5", "سلسلة 7", "X3", "X5", "X1", "Z4"],
-      "أودي": ["A3", "A4", "A6", "Q3", "Q5", "Q7", "TT"],
-      "شيفروليه": ["ماليبو", "كامارو", "سوبربان", "تاهو", "كولورادو"],
-      "لكزس": ["RX", "ES", "NX", "LX", "IS"],
-      "مازدا": ["3", "6", "CX-3", "CX-5", "CX-9"],
-      "ميتسوبيشي": ["لانسر", "باجيرو", "أوتلندر", "أكترس", "ميجنس"],
-      "سوبارو": ["فورستر", "ايمبريزا", "ليفورك", "أوتباك"],
-      "فولكسفاجن": ["جولف", "باسات", "Tiguan", "Polo"],
-      "رينو": ["كليو", "ميغان", "داستر", "سانديرو"],
-      "جيب": ["رانجلر", "غراند شيروكي", "شيروكي", "كمباس"],
-      "دايهاتسو": ["تيريوس", "تيريوس أكس", "كوستر", "ميكرا"],
-      "سيتروين": ["C3", "C4", "C5", "Berlingo"],
-      "إيسوزو": ["دي-ماكس", "فيريتسو", "فورورد"],
-      "سكودا": ["أوكتافيا", "فابيا", "سوبيرب", "كودياك"],
-      "other": ["نوع آخر"]
-    };
-
-    document.getElementById('brand').addEventListener('change', function() {
-      const brand = this.value;
+    function resetModel() {
       const modelSelect = document.getElementById('model');
       modelSelect.innerHTML = '<option value="">الموديل / الفئة</option>';
-
-      if (brand && vehicleModels[brand]) {
-        vehicleModels[brand].forEach(model => {
-          const option = document.createElement('option');
-          option.value = model;
-          option.textContent = model;
-          modelSelect.appendChild(option);
-        });
-        modelSelect.disabled = false;
-      } else {
-        modelSelect.disabled = true;
-      }
-    });
-
-    function initMap() {
-      const center = { lat: 31.963158, lng: 35.930359 };
-      const map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 8,
-        center: center,
-      });
-      window.map = map;
-      window.markers = [];
+      modelSelect.disabled = true;
+      // reset brand too if needed
+      // document.getElementById('brand').value = '';
     }
 
-    function showSection(sectionId) {
-      document.querySelectorAll('.filters').forEach(el => el.classList.remove('active'));
-      document.getElementById(sectionId).classList.add('active');
-
-      document.querySelectorAll('.tabs button').forEach(btn => btn.classList.remove('active'));
-      const tabButton = [...document.querySelectorAll('.tabs button')].find(btn =>
-        btn.textContent.includes(getSectionName(sectionId))
-      );
-      if (tabButton) tabButton.classList.add('active');
-    }
-
-    function getSectionName(id) {
-      const map = {
-        'real-estate': 'عقارات',
-        'vehicles': 'مركبات',
-        'services': 'خدمات',
-        'home-items': 'متعلقات منزلية',
-        'personal-items': 'مستلزمات شخصية',
-        'fashion': 'ملابس',
-        'hobbies': 'هوايات'
-      };
-      return map[id] || '';
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      showSection('real-estate');
-    });
-  </script>
-
-  <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-  </script>
-</body>
-</html>
+    // خدمات فرعية حسب الخدمة الرئيسية
+    const servicesSub = {
+      "home": ["تنظيف", "صيانة", "نجارة", "سباكة", "دهان"],
+      "personal": ["تجميل", "تدليك", "تدريب شخصي", "مدلك صحي"],
+      "tech": ["تصليح كمبيوتر", "تصليح هاتف", "برمجة مواقع", "تصميم جرافيك"],
+      "consulting": ["استشارات مالية", "استشارات قانونية", "استشارات تجارية"],
+      "delivery": ["توصيل طلبات", "نقل أثاث", "شحن داخلي"],
+      "entertainment": ["تنظيم حفلات", "تأجير معدات", "تصوير فيديو"],
+      "education": ["دروس خصوصية", "د
