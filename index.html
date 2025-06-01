@@ -80,7 +80,40 @@
     </select>
     <button id="applyFilters">تطبيق الفلاتر</button>
   </div>
-
+<!-- فلاتر قسم المركبات -->
+<div class="filters" id="vehicles">
+  <select id="vehicle-type">
+    <option value="">نوع المركبة</option>
+    <option value="سيارة">سيارة</option>
+    <option value="دراجة نارية">دراجة نارية</option>
+    <option value="شاحنة">شاحنة</option>
+    <option value="باص">باص</option>
+  </select>
+  <select id="brand">
+    <option value="">الماركة</option>
+    <option value="تويوتا">تويوتا</option>
+    <option value="هيونداي">هيونداي</option>
+    <option value="كيا">كيا</option>
+    <option value="نيسان">نيسان</option>
+    <option value="فورد">فورد</option>
+    <!-- أضف المزيد حسب الحاجة -->
+  </select>
+  <select id="year">
+    <option value="">سنة الصنع</option>
+    <option value="2025">2025</option>
+    <option value="2024">2024</option>
+    <option value="2023">2023</option>
+    <option value="2020-2022">2020 - 2022</option>
+    <option value="lt2020">قبل 2020</option>
+  </select>
+  <select id="price-vehicle">
+    <option value="">السعر</option>
+    <option value="lt5000">أقل من 5000</option>
+    <option value="5000-10000">من 5000 إلى 10000</option>
+    <option value="gt10000">أكثر من 10000</option>
+  </select>
+  <button id="applyVehicleFilters">تطبيق الفلاتر</button>
+</div>
   <!-- خريطة -->
   <div id="map"></div>
 
