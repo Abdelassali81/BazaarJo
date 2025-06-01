@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>BazaarJo - المنصة المتكاملة</title>
   <style>
     body {
@@ -32,7 +32,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      flex-grow: 1;
     }
     .tab-btn {
       padding: 8px 14px;
@@ -40,7 +39,6 @@
       background: #eee;
       cursor: pointer;
       border-radius: 5px;
-      transition: background-color 0.3s;
     }
     .tab-btn.active {
       background: #d81b60;
@@ -94,93 +92,16 @@
 
   <!-- قسم الفلاتر لعقارات -->
   <div class="filters active" id="real-estate">
-    <select id="type-realestate">
-      <option value="">نوع العقار</option>
-      <option value="أراضي سكنية">أراضي سكنية</option>
-      <option value="أراضي تجارية">أراضي تجارية</option>
-      <option value="أراضي زراعية">أراضي زراعية</option>
-      <option value="شقق">شقق</option>
-      <option value="فلل">فلل</option>
-      <option value="مزارع">مزارع</option>
-    </select>
-    <select id="price-realestate">
-      <option value="">السعر</option>
-      <option value="lt50">أقل من 50 ألف</option>
-      <option value="50-100">من 50 إلى 100 ألف</option>
-      <option value="gt100">أكثر من 100 ألف</option>
-    </select>
-    <select id="area">
-      <option value="">المساحة</option>
-      <option value="lt100">أقل من 100م²</option>
-      <option value="100-200">من 100 إلى 200م²</option>
-      <option value="gt200">أكثر من 200م²</option>
-    </select>
-    <select id="rooms">
-      <option value="">عدد الغرف</option>
-      <option value="1">1</option>
-      <option value="2">2</option>
-      <option value="3">3</option>
-      <option value="4">4+</option>
-    </select>
-    <button id="applyFilters">تطبيق الفلاتر</button>
+    <select id="type-realestate"></select>
+    <select id="price-realestate"></select>
+    <select id="area"></select>
+    <select id="rooms"></select>
+    <button id="applyFilters"></button>
   </div>
 
-  <!-- قسم الفلاتر للخدمات -->
-  <div class="filters" id="services">
-    <select id="service-type">
-      <option value="">نوع الخدمة</option>
-      <option value="كهربائي">كهربائي</option>
-      <option value="سباك">سباك</option>
-      <option value="نجار">نجار</option>
-      <option value="حداد">حداد</option>
-      <option value="تكييف وتبريد">تكييف وتبريد</option>
-      <option value="صيانة أجهزة منزلية">صيانة أجهزة منزلية</option>
-      <option value="دهان وتشطيب">دهان وتشطيب</option>
-      <option value="تنظيف منازل">تنظيف منازل</option>
-      <option value="نقل عفش">نقل عفش</option>
-      <option value="مكافحة حشرات">مكافحة حشرات</option>
-      <option value="غسيل سجاد وستائر">غسيل سجاد وستائر</option>
-      <option value="محاسبة">محاسبة</option>
-      <option value="استشارات قانونية">استشارات قانونية</option>
-      <option value="تصميم جرافيك">تصميم جرافيك</option>
-      <option value="تسويق إلكتروني">تسويق إلكتروني</option>
-      <option value="تطوير مواقع وتطبيقات">تطوير مواقع وتطبيقات</option>
-      <option value="ميكانيكي سيارات">ميكانيكي سيارات</option>
-      <option value="كهربائي سيارات">كهربائي سيارات</option>
-      <option value="غسيل سيارات متنقل">غسيل سيارات متنقل</option>
-      <option value="إكسسوارات سيارات">إكسسوارات سيارات</option>
-      <option value="دروس خصوصية">دروس خصوصية</option>
-      <option value="تدريب مهني">تدريب مهني</option>
-      <option value="تعليم لغات">تعليم لغات</option>
-      <option value="استشارات دراسية">استشارات دراسية</option>
-      <option value="مساج">مساج</option>
-      <option value="عناية بالبشرة">عناية بالبشرة</option>
-      <option value="كوافير">كوافير</option>
-      <option value="تركيب أظافر / رموش / شعر">تركيب أظافر / رموش / شعر</option>
-      <option value="تدريب كلاب">تدريب كلاب</option>
-      <option value="عناية بيطرية">عناية بيطرية</option>
-      <option value="استضافة حيوانات">استضافة حيوانات</option>
-    </select>
-    <button id="applyServiceFilters">تطبيق الفلاتر</button>
-  </div>
-
-  <!-- باقي الأقسام لا تحتوي على فلاتر حالياً -->
-  <div class="filters" id="vehicles">
-  <select id="vehicle-type">
-    <option value="">اختر نوع المركبة</option>
-    <option value="سيارات">سيارات</option>
-    <option value="قطع غيار السيارات وملحقاتها">قطع غيار السيارات وملحقاتها</option>
-    <option value="قوارب">قوارب</option>
-    <option value="قطع غيار القوارب وملحقاتها">قطع غيار القوارب وملحقاتها</option>
-    <option value="كرفانات وبيوت متنقلة">كرفانات وبيوت متنقلة</option>
-    <option value="دراجات نارية وجرارات">دراجات نارية وجرارات</option>
-    <option value="دراجات نارية">دراجات نارية</option>
-    <option value="قطع غيار الدراجات النارية وملحقاتها">قطع غيار الدراجات النارية وملحقاتها</option>
-    <option value="شاحنات ورافعات ومعدات بناء">شاحنات، رافعات شوكية، ومعدات بناء</option>
-    <option value="آلات زراعية وحراجية">آلات زراعية وحراجية</option>
-  </select>
-  <button id="applyVehicleFilters">تطبيق الفلاتر</button>
-</div>
+  <!-- باقي الأقسام (سيتم تطويرها لاحقًا) -->
+  <div class="filters" id="vehicles">قسم المركبات (قيد التطوير)</div>
+  <div class="filters" id="services">قسم خدمات</div>
   <div class="filters" id="jobs">قسم وظائف (قيد التطوير)</div>
   <div class="filters" id="home">قسم متعلقات منزلية (قيد التطوير)</div>
   <div class="filters" id="electronics">قسم أجهزة إلكترونية (قيد التطوير)</div>
@@ -199,11 +120,7 @@
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
         sections.forEach(s => s.classList.remove('active'));
-        const targetId = tab.dataset.target;
-        const targetSection = document.getElementById(targetId);
-        if (targetSection) {
-          targetSection.classList.add('active');
-        }
+        document.getElementById(tab.dataset.target).classList.add('active');
       });
     });
 
@@ -233,23 +150,40 @@
       });
     });
 
-    document.getElementById("applyServiceFilters").addEventListener("click", () => {
-      const selected = document.getElementById("service-type").value;
-      alert("تم اختيار الخدمة: " + selected);
-    });
-
     const translations = {
       ar: {
         header: "BazaarJo - المنصة المتكاملة",
-        tabs: ["عقارات", "سيارات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
+        tabs: ["عقارات", "مركبات", "خدمات", "وظائف", "متعلقات منزلية", "أجهزة إلكترونية", "مستلزمات شخصية", "ملابس وأحذية", "هوايات وترفيه"],
         regionLabel: "اختر المنطقة",
-        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"]
+        regions: ["عمان","الزرقاء","إربد","البلقاء","مادبا","العقبة","الكرك","معان","جرش","المفرق","الطفيلة","عجلون"],
+        realEstateFilters: {
+          typePlaceholder: "نوع العقار",
+          types: ["أراضي سكنية", "أراضي تجارية", "أراضي زراعية", "شقق", "فلل", "مزارع"],
+          pricePlaceholder: "السعر",
+          prices: ["أقل من 50 ألف", "من 50 إلى 100 ألف", "أكثر من 100 ألف"],
+          areaPlaceholder: "المساحة",
+          areas: ["أقل من 100م²", "من 100 إلى 200م²", "أكثر من 200م²"],
+          roomsPlaceholder: "عدد الغرف",
+          rooms: ["1", "2", "3", "4+"],
+          apply: "تطبيق الفلاتر"
+        }
       },
       en: {
         header: "BazaarJo - Integrated Platform",
-        tabs: ["Real Estate", "Cars", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
+        tabs: ["Real Estate", "Vehicles", "Services", "Jobs", "Home", "Electronics", "Personal", "Clothing", "Hobbies"],
         regionLabel: "Select Region",
-        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"]
+        regions: ["Amman","Zarqa","Irbid","Balqa","Madaba","Aqaba","Karak","Ma'an","Jerash","Mafraq","Tafila","Ajloun"],
+        realEstateFilters: {
+          typePlaceholder: "Property Type",
+          types: ["Residential Land", "Commercial Land", "Agricultural Land", "Apartments", "Villas", "Farms"],
+          pricePlaceholder: "Price",
+          prices: ["Less than 50K", "50K to 100K", "More than 100K"],
+          areaPlaceholder: "Area",
+          areas: ["< 100m²", "100–200m²", "> 200m²"],
+          roomsPlaceholder: "Rooms",
+          rooms: ["1", "2", "3", "4+"],
+          apply: "Apply Filters"
+        }
       }
     };
 
@@ -260,6 +194,14 @@
       const regionSelect = document.getElementById('region');
       regionSelect.innerHTML = `<option value="">${t.regionLabel}</option>` +
         t.regions.map(r => `<option value="${r}">${r}</option>`).join("");
+
+      // تحديث فلاتر العقارات
+      const rf = t.realEstateFilters;
+      document.getElementById("type-realestate").innerHTML = `<option value="">${rf.typePlaceholder}</option>` + rf.types.map(v => `<option value="${v}">${v}</option>`).join("");
+      document.getElementById("price-realestate").innerHTML = `<option value="">${rf.pricePlaceholder}</option>` + rf.prices.map(v => `<option value="${v}">${v}</option>`).join("");
+      document.getElementById("area").innerHTML = `<option value="">${rf.areaPlaceholder}</option>` + rf.areas.map(v => `<option value="${v}">${v}</option>`).join("");
+      document.getElementById("rooms").innerHTML = `<option value="">${rf.roomsPlaceholder}</option>` + rf.rooms.map(v => `<option value="${v}">${v}</option>`).join("");
+      document.getElementById("applyFilters").textContent = rf.apply;
     }
 
     document.getElementById('language').addEventListener('change', (e) => {
@@ -268,14 +210,8 @@
       document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
       updateLanguage(lang);
     });
-    document.getElementById("applyVehicleFilters").addEventListener("click", () => {
-  const selected = document.getElementById("vehicle-type").value;
-  alert("تم اختيار المركبة: " + selected);
-});
 
-    // Set initial language and populate regions on page load
     updateLanguage('ar');
-
   </script>
 
   <script async defer
