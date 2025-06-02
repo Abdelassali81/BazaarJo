@@ -81,46 +81,6 @@ You said:
   </style>
 </head>
 <body>
-   <div style="background-color: #d1e7dd; padding: 10px;">
-    <button onclick="toggleAdForm()">🟢 أضف إعلانك</button>
-  </div>
-  <div id="adForm" style="display: none; background-color: #fff3cd; padding: 15px; border: 1px solid #ccc; margin-top: 10px;">
-    <h3>نشر إعلان جديد</h3>
-
-    <label>القسم:</label>
-    <select id="adCategory">
-      <option value="">اختر القسم</option>
-      <option value="real-estate">عقارات</option>
-      <option value="vehicles">مركبات</option>
-      <option value="services">خدمات</option>
-    </select><br/><br/>
-
-    <label>عنوان الإعلان:</label><br/>
-    <input type="text" id="adTitle" /><br/><br/>
-
-    <label>الوصف:</label><br/>
-    <textarea id="adDescription"></textarea><br/><br/>
-
-    <label>السعر:</label><br/>
-    <input type="number" id="adPrice" /><br/><br/>
-
-    <label>رابط الصورة (اختياري):</label><br/>
-    <input type="text" id="adImage" /><br/><br/>
-
-    <button onclick="submitAd()">✅ نشر الإعلان</button>
-    <button onclick="toggleAdForm()">❌ إغلاق</button>
-  </div>
-   <section id="real-estate" style="background-color: #e2e3e5; padding: 10px; margin-top: 20px;">
-    <h2>🏠 عقارات</h2>
-  </section>
-
-  <section id="vehicles" style="background-color: #e2e3e5; padding: 10px; margin-top: 20px;">
-    <h2>🚗 مركبات</h2>
-  </section>
-
-  <section id="services" style="background-color: #e2e3e5; padding: 10px; margin-top: 20px;">
-    <h2>🛠️ خدمات</h2>
-  </section>
   <header>BazaarJo - بازار الأردن الأول</header>
 
   <!-- تبويبات الأقسام -->
@@ -452,37 +412,5 @@ You said:
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
-  <script>
-    function toggleAdForm() {
-      const form = document.getElementById('adForm');
-      form.style.display = form.style.display === 'none' ? 'block' : 'none';
-    }
-
-    function submitAd() {
-      const category = document.getElementById('adCategory').value;
-      const title = document.getElementById('adTitle').value;
-      const desc = document.getElementById('adDescription').value;
-      const price = document.getElementById('adPrice').value;
-      const image = document.getElementById('adImage').value;
-
-      if (!category || !title || !desc || !price) {
-        alert("يرجى تعبئة جميع الحقول المطلوبة.");
-        return;
-      }
-
-      const adHTML = `
-        <div style="background: #f9f9f9; padding: 10px; margin: 10px 0; border: 1px solid #ccc;">
-          <h4>${title}</h4>
-          <p>${desc}</p>
-          <p><strong>السعر:</strong> ${price} د.أ</p>
-          ${image ? `<img src="${image}" alt="صورة الإعلان" style="max-width: 100%;">` : ""}
-        </div>
-      `;
-
-      document.getElementById(category).insertAdjacentHTML('beforeend', adHTML);
-      toggleAdForm();
-    }
-  </script>
-
 </body>
 </html>
