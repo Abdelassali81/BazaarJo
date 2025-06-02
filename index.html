@@ -1,3 +1,4 @@
+You said:
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -11,33 +12,6 @@
       padding: 0;
       background: #f5f5f5;
     }
-    <button onclick="toggleAdForm()">أضف إعلانك</button>
-<div id="adForm" style="display: none;">
-  <h3>نشر إعلان جديد</h3>
-
-  <label>القسم:</label>
-  <select id="adCategory">
-    <option value="">اختر القسم</option>
-    <option value="real-estate">عقارات</option>
-    <option value="vehicles">مركبات</option>
-    <option value="services">خدمات</option>
-  </select>
-
-  <label>عنوان الإعلان:</label>
-  <input type="text" id="adTitle" />
-
-  <label>الوصف:</label>
-  <textarea id="adDescription"></textarea>
-
-  <label>السعر:</label>
-  <input type="number" id="adPrice" />
-
-  <label>رابط الصورة (اختياري):</label>
-  <input type="text" id="adImage" />
-
-  <button onclick="submitAd()">نشر الإعلان</button>
-  <button onclick="toggleAdForm()">إغلاق</button>
-</div
 
     header {
       background: linear-gradient(90deg, #d81b60, #8e24aa);
@@ -438,48 +412,5 @@
   <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
   </script>
-  <script>
-  function initMap() {
-    const center = { lat: 31.963158, lng: 35.930359 }; // عمان، الأردن
-    const map = new google.maps.Map(document.getElementById("map"), {
-      center: center,
-      zoom: 11,
-    });
-  }
-</script>
-<script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
-</script>
-  <script>
-  function toggleAdForm() {
-    const form = document.getElementById('adForm');
-    form.style.display = form.style.display === 'none' ? 'block' : 'none';
-  }
-
-  function submitAd() {
-    const category = document.getElementById('adCategory').value;
-    const title = document.getElementById('adTitle').value;
-    const desc = document.getElementById('adDescription').value;
-    const price = document.getElementById('adPrice').value;
-    const image = document.getElementById('adImage').value;
-
-    if (!category || !title || !desc || !price) {
-      alert("يرجى تعبئة جميع الحقول المطلوبة.");
-      return;
-    }
-
-    const adHTML = `
-      <div style="background: #f9f9f9; padding: 10px; margin: 10px 0; border: 1px solid #ccc;">
-        <h4>${title}</h4>
-        <p>${desc}</p>
-        <p><strong>السعر:</strong> ${price} د.أ</p>
-        ${image ? `<img src="${image}" alt="صورة الإعلان" style="max-width: 100%;">` : ""}
-      </div>
-    `;
-
-    document.getElementById(category).insertAdjacentHTML('beforeend', adHTML);
-    toggleAdForm();
-  }
-</script>
 </body>
 </html>
