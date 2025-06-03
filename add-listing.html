@@ -71,16 +71,56 @@
     </select>
 
     <!-- حقول العقارات -->
-    <div id="real-estate" class="category-fields">
-      <label>نوع العقار:</label>
-      <select><option>شقة</option><option>فيلا</option><option>أرض</option></select>
+  <div id="real-estate-fields" class="category-fields">
+  <h3>إضافة عقار</h3>
 
-      <label>المساحة (م²):</label>
-      <input type="number" placeholder="مثال: 120">
+  <label for="property_type">نوع العقار:</label>
+  <select id="property_type" name="property_type" required>
+    <option value="">اختر نوع العقار</option>
+    <option value="شقة">شقة</option>
+    <option value="فيلا">فيلا</option>
+    <option value="دوبلكس">دوبلكس</option>
+    <option value="تاون هاوس">تاون هاوس</option>
+    <option value="أرض">أرض</option>
+    <option value="محل تجاري">محل تجاري</option>
+    <option value="مكتب">مكتب</option>
+    <option value="شقة دوبلكس">شقة دوبلكس</option>
+    <option value="عمارة">عمارة</option>
+    <option value="مخزن">مخزن</option>
+    <option value="استراحة">استراحة</option>
+    <option value="عقار زراعي">عقار زراعي</option>
+    <option value="غرفة سكنية">غرفة سكنية</option>
+    <option value="شقة مفروشة">شقة مفروشة</option>
+  </select>
 
-      <label>عدد الغرف:</label>
-      <input type="number" placeholder="مثال: 3">
-    </div>
+  <label for="price">السعر (بالدينار الأردني):</label>
+  <input type="number" id="price" name="price" placeholder="مثال: 85000" required>
+
+  <label for="area">المساحة (م²):</label>
+  <input type="number" id="area" name="area" placeholder="مثال: 120" required>
+
+  <label for="rooms">عدد الغرف:</label>
+  <select id="rooms" name="rooms" required>
+    <option value="">اختر عدد الغرف</option>
+    <option value="1">1 غرفة</option>
+    <option value="2">2 غرف</option>
+    <option value="3">3 غرف</option>
+    <option value="4">4 غرف</option>
+    <option value="5">5 غرف</option>
+    <option value="6">6 غرف أو أكثر</option>
+  </select>
+
+  <label for="location">الموقع:</label>
+  <input type="text" id="location" name="location" placeholder="مثال: عمان - جبل الحسين" required>
+
+  <label for="description">الوصف التفصيلي:</label>
+  <textarea id="description" name="description" placeholder="اكتب وصفًا شاملاً للعقار" rows="5"></textarea>
+
+  <label for="images">صور العقار:</label>
+  <input type="file" id="images" name="images[]" accept="image/*" multiple required>
+
+  <button type="submit">نشر الإعلان</button>
+</div>
 
     <!-- حقول المركبات -->
     <div id="vehicles" class="category-fields">
